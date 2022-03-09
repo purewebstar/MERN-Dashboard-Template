@@ -1,0 +1,7 @@
+RewriteEngine On
+Options -Multiviews
+
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.+)$ index.html?url=$1 [QSA,L]
