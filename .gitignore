@@ -1,7 +1,7 @@
 .env
 node_modules
 /client/node_modules
-/client/src/constants/config
+/client/src/constants/config.js
 /client/.pnp
 /client/.pnp.js
 
