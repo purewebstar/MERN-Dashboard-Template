@@ -5,13 +5,5 @@ const config = {
     DOMAIN_NAME: 'http://localhost:3000',
     GOOGLE_CLIENT_ID: '92269106918-lbiqddfgeishrkgv288tk.apps.googleusercontent.com'
 }
-
-const config2 = {
-    WS_BASE_URL: 'https://some-api.gowebbox.com/user/',
-    WS_URL: 'https://some-api.gowebbox.com/',
-    WS_BACK_URL: 'https://some-api.gowebbox.com',
-    DOMAIN_NAME: 'https://some.gowebbox.com',
-    GOOGLE_CLIENT_ID: '92269106918-lbiqddfgeishrkgv288tk.apps.googleusercontent.com'
-}
  
 export default config;
