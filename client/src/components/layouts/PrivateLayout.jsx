@@ -4,8 +4,8 @@
  */
 import React from 'react';
 import {Outlet} from 'react-router-dom';
-import AMTopbar from './appbar/AMTopbar';
-import AMBottombar from './appbar/AMBottombar';
+import AMTopbar from './navigations/AMTopbar';
+import AMBottombar from './navigations/AMBottombar';
 
 const PrivateLayout = () =>{
 

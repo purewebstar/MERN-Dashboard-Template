@@ -1,4 +1,14 @@
-import { Box, Typography, Grid, Link, Divider, AppBar } from '@mui/material';
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+/**
+ *     Footer
+ */
+//--------------------------------------------------------------------
+import { Box, Typography, Link, AppBar } from '@mui/material';
 import React from 'react';
 
 const Footer = () => {

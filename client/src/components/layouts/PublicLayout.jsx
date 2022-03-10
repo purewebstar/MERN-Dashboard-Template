@@ -1,6 +1,6 @@
 import React from 'react';
 import {Outlet} from 'react-router-dom';
-import AMFooter from './appbar/AMFooter';
+import AMFooter from './navigations/AMFooter';
 const PublicLayout = () =>{
 
   return (

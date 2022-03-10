@@ -175,15 +175,17 @@ const Login = props =>{
       <AMBackdrop
       open={open}
       />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" >
         <Box
         sx={{
         marginTop: 0,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        borderRadius: 2,
-        bgcolor: '#ffffff',
+        borderRadius: 1,
+        bgcolor: '#fafafa',
+        border: 1,
+        borderColor: `#e0e0e0`,
         mt:6,
         }}
         >
@@ -195,16 +197,18 @@ const Login = props =>{
           >
             <Box
             sx={{
-              p:1,
+              p:2,
               mt:-6,
               borderRadius: 2,
-              backgroundColor: '#1c2331',
+              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              border: 1,
+              borderColor: `#e0e0e0`,
             }}
             >
             <Avatar sx={{m: 'auto', bgcolor: '#e65100' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography variant="h5" sx={{fontWeight: 400, mb:1, mt:1,textAlign: 'center',color: `#ffffff`}}>
+            <Typography variant="h5" sx={{fontWeight: 700, mb:1, mt:1, textAlign: 'center', color: '#b71c1c'}}>
               Sign In
             </Typography>
             <Button variant="contained"
