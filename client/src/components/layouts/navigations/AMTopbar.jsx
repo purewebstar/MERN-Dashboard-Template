@@ -1,9 +1,13 @@
 /**
- * 
- * 
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
  * 
  */
-
+// -----------------------------------------------------------------
+/**
+ *     AMTopbar
+ */
+//--------------------------------------------------------------------
  import React from 'react';
  import { styled, useTheme, alpha } from '@mui/material/styles';
  import Box from '@mui/material/Box';
@@ -19,13 +23,11 @@
  import Badge from '@mui/material/Badge';
  import NotificationsIcon from '@mui/icons-material/Notifications';
  import Tooltip from '@mui/material/Tooltip';
- import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
  import { teal, purple, blue} from '@mui/material/colors';
  import Stack from '@mui/material/Stack';
  import AMAccountMenu from './AMAccountMenu';
  import AMNotificationMenu from './AMNotificationMenu';
  import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
- import MoreIcon from '@mui/icons-material/MoreVert';
  import config from '../../../constants/config';
  import { useDispatch, useSelector } from 'react-redux';
  import {GetProfile} from '../../../redux/actions/profileAction';
@@ -122,7 +124,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 
-const Topbar = props =>{
+const AMTopbar = props =>{
     const dispatch = useDispatch();
 
   const userProfile = async ()=>{ 
@@ -146,10 +148,9 @@ const Topbar = props =>{
 
   const [open, setOpen] = React.useState(false);
   const [openNotification, setOpenNotification] = React.useState(false);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElNotification, setAnchorElNotification] = React.useState(null);
-  const[notifiCount, setNotifiCount] = React.useState(0);
+  const[notifiCount, setNotifiCount] = React.useState(2);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -216,7 +217,7 @@ const Topbar = props =>{
                     noWrap
                     component="div"
                     sx={{ display: { xs: 'none', sm: 'block' } , mt:2, color: `#ffffff`, fontWeight: 500}}    
-                    style={{padding: '5px', borderRadius: '5%', marginLeft: '1px',}}
+                    style={{padding: '5px', borderRadius: '5%', marginLeft: '1px'}}
                     id="nav-dashboard"
                     
                   >
@@ -229,8 +230,8 @@ const Topbar = props =>{
                   noWrap
                   component="div"
                   sx={{ display: { xs: 'none', sm: 'block' } , mt:2, color: `#ffffff`, fontWeight: 500}}    
-                  style={{padding: '5px', borderRadius: '5%', marginLeft: '15px',}}
-                  id="nav-orders"
+                  style={{padding: '5px', borderRadius: '5%', marginLeft: '15px'}}
+                  id="nav-order"
                   
                 >
                 Orders
@@ -242,11 +243,11 @@ const Topbar = props =>{
                       noWrap
                       component="div"
                       sx={{ display: { xs: 'none', sm: 'block' } , mt:2, color: `#ffffff`, fontWeight: 500}}                   
-                      style={{padding: '5px', borderRadius: '5%', marginLeft: '15px',}}
-                      id="nav-blogs"
+                      style={{padding: '5px', borderRadius: '5%', marginLeft: '15px'}}
+                      id="nav-blog"
                   
                     >
-                      <AddPhotoAlternateRoundedIcon sx={{ fontSize: 38, p:1 }} style={{ backgroundColor: '#e65100', color: '', borderRadius: '50%' }}/>
+                      <AddPhotoAlternateRoundedIcon sx={{ fontSize: 38, p:1 }} style={{ backgroundColor: '#d32f2f ', color: '', borderRadius: '50%' }}/>
                     </Typography>
                   </Link>
                 <Link to='/user/feedback'  >
@@ -255,11 +256,11 @@ const Topbar = props =>{
                   noWrap
                   component="div"
                   sx={{ display: { xs: 'none', sm: 'block' } , mt:2, color: `#ffffff`, fontWeight: 500}}                 
-                  style={{padding: '5px', borderRadius: '5%', marginLeft: '15px',}}
-                  id="nav-feedbacks"
+                  style={{padding: '5px', borderRadius: '5%', marginLeft: '15px'}}
+                  id="nav-feedback"
                   
                 >
-                Feedbacks
+                Feedback
                 </Typography>
                 </Link>
                 <Link to='/user/subscriber'  >
@@ -268,10 +269,10 @@ const Topbar = props =>{
                       noWrap
                       component="div"
                       sx={{ display: { xs: 'none', sm: 'block' } , mt:2, color: `#ffffff`, fontWeight: 500}}                
-                      style={{padding: '5px', borderRadius: '5%', marginLeft: '15px',}}
-                      id="nav-subscribers"
+                      style={{padding: '5px', borderRadius: '5%', marginLeft: '15px'}}
+                      id="nav-subscriber"
                     >
-                    Subscribers
+                    Subscriber
                     </Typography>
                   </Link>
               </Box>
@@ -294,7 +295,6 @@ const Topbar = props =>{
                   openNotification={openNotification}
                   handleClose={handleCloseNotification}
                   anchorEl={anchorElNotification}
-                  role={props.role}
                   handleCount={handleNotificationCount}
                   />
                 <Tooltip title="Account Setting" className={``}>
@@ -310,7 +310,7 @@ const Topbar = props =>{
                           src={profile.photo?
                               config.WS_URL + 'images/profile/' + profile.photo: 
                               profile&&profile.firstName&&profile.firstName.charAt(0)}
-                          sx={{width: 30, height: 30, bgcolor: (props.role)?teal[500]: blue[300]}}
+                          sx={{width: 30, height: 30, bgcolor: blue[300]}}
                           />
                         </StyledBadge>
                       </Stack>
@@ -320,18 +320,8 @@ const Topbar = props =>{
                 <AMAccountMenu 
                 handleCloseUserMenu={handleCloseUserMenu}
                 anchorElUser={anchorElUser}
-                role={props.role}
                 profile={profile&&profile}
                 />
-                <IconButton
-                aria-controls={openList ? 'fade-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={openList ? 'true' : undefined}
-                onClick={handleClick} sx={{ p: 0 }}
-                className={`page-list-icon`}
-                >
-                </IconButton>
-
             </Box>
           </Toolbar>
       </AppBar>
@@ -339,4 +329,4 @@ const Topbar = props =>{
   )
 };
 
-export default Topbar;
+export default AMTopbar;

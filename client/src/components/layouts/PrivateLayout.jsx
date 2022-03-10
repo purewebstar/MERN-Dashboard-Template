@@ -23,6 +23,14 @@ const PrivateLayout = () =>{
 
     {
     /**
+     *  [Bottombar Navigation For Smaller devices [Mobile, Tablets, ..etc]
+     * [Dashboard, order, blog , ... etc]
+     * 
+     */
+    }
+    <AMBottombar/>
+    {
+    /**
      * Outlet, contains all PrivateLayout {children},
      * Directories:
      * Views -> Auth -> [Dashboard, profile, blog, ...etc]
@@ -31,14 +39,6 @@ const PrivateLayout = () =>{
 
     <Outlet />
 
-    {
-    /**
-     *  [Bottombar Navigation For Smaller devices [Mobile, Tablets, ..etc]
-     * [Dashboard, order, blog , ... etc]
-     * 
-     */
-    }
-    <AMBottombar/>
    </>
   );
 }

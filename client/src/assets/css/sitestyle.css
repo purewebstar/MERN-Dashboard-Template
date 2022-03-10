@@ -4,3 +4,9 @@ a {
   text-decoration: none !important;
   cursor: pointer !important;
 }
+
+@media (max-width: 767px) {
+  .bottom-navigation{
+    display: block!important;
+  }
+}

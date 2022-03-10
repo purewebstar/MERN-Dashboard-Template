@@ -1,9 +1,18 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+/**
+ *     AMAccountMenu
+ */
+//--------------------------------------------------------------------
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton'; 
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -12,16 +21,25 @@ import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsPowerRoundedIcon from '@mui/icons-material/SettingsPowerRounded';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import config from '../../../constants/config';
+import {useNavigate} from 'react-router-dom';
+import {deleteCookie} from '../../../utils/Cookies';
 
-const AccountMenu = props => {
 
+const AMAccountMenu = props => {
+    let navigate = useNavigate();
+    
     const handleLogout = async(e)=>{
       e.preventDefault();
-      window.localStorage.removeItem('accessToken');
+
+      window.localStorage.removeItem('access');
+      deleteCookie('refresh');
+
       setTimeout(()=>{
-        window.location.href = '/auth/login';
-      },200)
+        navigate('/auth/login')
+      },300)
     }
     return (
         <Menu
@@ -59,57 +77,71 @@ const AccountMenu = props => {
                     src={props.profile?
                         config.WS_URL + 'images/profile/' + props.profile.userObj.photo: 
                         props.profile&&props.profile.userObj.firstName&&props.profile.userObj.firstName.charAt(0)}
-                    sx={{width: 50, height: 50, bgcolor: blue[300], p: 0, mb:1, mt:1, mb:1, left: '35%'}}
+                    sx={{width: 50, height: 50, p: 0, mb:1, mt:1, mb:1, left: '35%'}}
                     />
                     <Typography
                     variant="h6"
                     noWrap
                     component="div"    
-                    sx={{color: `#000000`, fontWeight: 800, mb:1, mt:1}}            
+                    sx={{color: `#000000`, fontWeight: 600, mb:1, mt:2}}            
                     >
-                   {props.profile&&props.profile.userObj.displayName}
+                   {props.profile&&props.profile.userObj.displayName} {`Abrilojson`}
                     </Typography>
                 </Box>
                 </MenuItem> 
                 <Divider />
-                <MenuItem>
-                <Box sx={{display: 'flex'}} onClick={props.handleCloseUserMenu}>
+                <MenuItem onClick={props.handleCloseUserMenu}>
                 <Link to='/user/profile' style={{display: `flex`}} >
-                    <IconButton sx={{mt: 0, mr:1}}>
-                    <ManageAccountsIcon
-                    sx={{fontSize: 22,color:blue[300]}}
+                <ListItemIcon>
+                   <ManageAccountsIcon
+                    sx={{fontSize: 22}}
                     />
-                    </IconButton>
-                    <Typography
+                </ListItemIcon>
+                <Typography
                         variant="h6"
                         noWrap
                         component="div"               
                         id="nav-settings"
-                        sx={{mt: 1,color: `#000000`, fontWeight: 600}}
+                        sx={{color: `#000000`, fontWeight: 600}}
                     >
-                    Edit Profile
+                    Profile
                 </Typography>
-                 </Link>
-                </Box>
+                </Link>
+                </MenuItem>
+                <MenuItem onClick={props.handleCloseUserMenu}>
+                <Link to='/user/profile' style={{display: `flex`}} >
+                <ListItemIcon>
+                   <AttachMoneyIcon
+                    sx={{fontSize: 22}}
+                    />
+                </ListItemIcon>
+                <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"               
+                        id="nav-billing"
+                        sx={{color: `#000000`, fontWeight: 600}}
+                    >
+                   Billing
+                </Typography>
+                </Link>
                 </MenuItem>
                 <Divider />
                 <MenuItem>
-                <Box sx={{display: 'flex'}}  onClick={handleLogout}>
-                    <IconButton sx={{mt: -2, mr:1}}>
-                    <SettingsPowerRoundedIcon
-                     sx={{fontSize: 20, color:blue[300]}}
+                <ListItemIcon onClick={handleLogout}>
+                  <SettingsPowerRoundedIcon
+                     sx={{fontSize: 22}}
                     />
-                    </IconButton>
-                    <Typography
+                </ListItemIcon>
+                <Typography
                         variant="h6"
                         noWrap
                         component="div"               
                         id="nav-logout"
-                        sx={{mt: -1,color: `#000000`, fontWeight: 600}}
+                        sx={{color: `#000000`, fontWeight: 600}}
                     >
                     Logout
                     </Typography>
-                </Box>
                 </MenuItem>
             </MenuList>
             </Paper>
@@ -117,4 +149,4 @@ const AccountMenu = props => {
     );
 };
 
-export default AccountMenu;
+export default AMAccountMenu;
