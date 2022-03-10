@@ -127,8 +127,8 @@ const AMAccountMenu = props => {
                 </Link>
                 </MenuItem>
                 <Divider />
-                <MenuItem>
-                <ListItemIcon onClick={handleLogout}>
+                <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
                   <SettingsPowerRoundedIcon
                      sx={{fontSize: 22}}
                     />

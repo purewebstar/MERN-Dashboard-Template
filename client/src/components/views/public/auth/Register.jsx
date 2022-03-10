@@ -362,7 +362,7 @@ const Register = props =>{
           }}
           >
             <Box
-            sx={{
+            sx={{ 
               p:2,
               mt:-6,
               borderRadius: 2,
