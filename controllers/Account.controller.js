@@ -5,7 +5,7 @@
 */
 const User = require('../models/User');
 const Profile = require('../models/Profile')
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const initAgenda = require('../config/initAgenda');
@@ -15,20 +15,32 @@ const initAgenda = require('../config/initAgenda');
  *  create account, read , ....
  * 
 */
-// creating User account
+// creating User account 
+// regex to test password strength
+let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))');
 const createAccount = {
-    /**
+    /**  
      * 
      *  local account
      */
     local: async(req, res)=>{
         const {firstName, lastName, email, password} = req.body;
+
+        if(!(strongPassword.test(password) || mediumPassword.test(password))){
+            return res.status(400).json({message: 'Weak password!' ,status: false})
+        }
         if(!(email && password && firstName && lastName)){
             return res.status(400).json({message: 'Input required!' ,status: false})
         }
         let displayName = email.split('@')[0];
         const hashedPassword = await bcrypt.hash(password, 12);
-        const result = await User.findOne({email: email, google: email}).clone();
+        const result = await User.findOne({
+            $or: [
+                {email: email},
+                {google: email}
+            ]
+        }).clone();
         if(!result){
             const newUser = User({               
                 email: email,
@@ -79,7 +91,7 @@ const createAccount = {
         await newUser.save({new:true}, async(err,success)=>{
          if(err) return res.status(400).json({message: err.message})
          else{
-            const newProfile = new Profile({
+            const newProfile = new Profile({ 
                 user: success._id,
                 photo: imageUrl,
             });
@@ -104,7 +116,7 @@ const verifyAccount = {
     newAccount: async (email, user_id) =>{
         const payload = {user_id: user_id};
         const refreshToken = jwt.sign({payload}, process.env.REFRESH_KEY, {expiresIn: '2d'});
-        let verifyLink = `${process.env.ORIGIN_ACCESS_HOST}/auth/verify-email/1/${refreshToken}`;
+        let verifyLink = `${process.env.ORIGIN_ACCESS_HOST}/${process.env.NEW_ACCOUNT_VERIFY_ROUTE}/${refreshToken}`;
         // sending verification to user email  
         let validEmail = User.findOne({email: email}).clone();
         if(validEmail){
@@ -112,7 +124,7 @@ const verifyAccount = {
                 await initAgenda.start();
                 await initAgenda.schedule(`in 5 seconds`, "send new account verify email report", {
                     to: email, from: `${process.env.SECRET_SITE_EMAIL}`,subject: 'Verify Account', text: 'MERN ACCOUNT USERS',
-                    email:email, templateName: 'new-account-verify.ejs',
+                    email:email, ejsTemplate: 'new-account-verify.ejs',
                     verifyLink: verifyLink,
                 });
             })();
@@ -131,13 +143,13 @@ const verifyAccount = {
                 const User_id = success._id;
                 const payload = {user_id: User_id};
                 const refreshToken = jwt.sign({payload}, process.env.REFRESH_KEY, {expiresIn: '2d'});
-                let verifyLink = `${process.env.ORIGIN_ACCESS_HOST}/auth/verify-email/0/${refreshToken}`;
+                let verifyLink = `${process.env.ORIGIN_ACCESS_HOST}/${process.env.RESET_PASSWORD_VERIFY_ROUTE}/${refreshToken}`;
                 // sending verification to user email  
                 (async function () {
                     await initAgenda.start();
                     await initAgenda.schedule(`in 5 seconds`, "send reset password verify email report", {
                         to: success.email, from: `${process.env.SECRET_SITE_EMAIL}`,subject: 'Verify Account', text: 'MERN ACCOUNT USERS',
-                        email:success.email, templateName: 'reset-password-verify.ejs',
+                        email:success.email, ejsTemplate: 'reset-password-verify.ejs',
                         verifyLink: verifyLink,
                     });
                 })(); 
@@ -304,8 +316,8 @@ const updateAccount = {
     updatePassword: async (req, res)=>{
         const {oldPassword, newPassword} = req.body;
 
-        if(newPassword==='' || newPassword===null){
-            return res.status(400).json({message: 'Input required!' ,status: false})
+        if(!(strongPassword.test(newPassword) || mediumPassword.test(newPassword))){
+            return res.status(400).json({message: 'Weak password!' ,status: false})
         }
         const hashedOldPassword = await bcrypt.hash(oldPassword, 12);
         const hashedNewPassword = await bcrypt.hash(newPassword, 12);

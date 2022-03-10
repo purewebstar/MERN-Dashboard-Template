@@ -16,10 +16,10 @@ const path = require('path');
   "send new account verify email report",
   { priority: "high", concurrency: 10 },
   async (job) => {
-    const { from, to, subject, text, verifyLink} = job.attrs.data;
-    let siteLogo = `${process.env.SITE_HOST}/`;
+    const { from, to, subject, text, verifyLink, ejsTemplate} = job.attrs.data;
+    let siteLogo = `${process.env.SITE_HOST}/images/site/siteLogo.png`;
       let siteLink =`${process.env.ORIGIN_ACCESS_HOST}`;
-      ejs.renderFile(path.join(__dirname, `../email-templates/account/${'new-account-verify.ejs'}`), 
+      ejs.renderFile(path.join(__dirname, `../email-templates/${ejsTemplate}`), 
           {
             email:to,
             siteLogo: siteLogo,
@@ -41,10 +41,10 @@ initAgenda.define(
   "send reset password verify email report",
   { priority: "high", concurrency: 10 },
   async (job) => {
-    const { from, to, subject, text, firstName, verifyLink} = job.attrs.data;
-    let siteLogo = `${process.env.SITE_HOST}/`;
+    const { from, to, subject, text, firstName, verifyLink, ejsTemplate} = job.attrs.data;
+    let siteLogo = `${process.env.SITE_HOST}/images/site/siteLogo.png`;
       let siteLink =`${process.env.ORIGIN_ACCESS_HOST}`;
-      ejs.renderFile(path.join(__dirname, `../email-templates/account/${'reset-password-verify.ejs'}`), 
+      ejs.renderFile(path.join(__dirname, `../email-templates/${ejsTemplate}`), 
           {
             firstName: firstName,
             siteLogo: siteLogo,
