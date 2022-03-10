@@ -11,13 +11,13 @@ Demonstration of this Template [MERN-Dashboard-Template](https://mern-dash.abrah
 These instructions will guide you on how to use and integrate with your design or next app idea. For Front-End implementation guides, you can find necessary informations in clients directory.
 
 ## Features
-[^1]: User account signup & sign in with Google oAuth and Local Account.
-[^2]: New Account verification via email address. SendGrid API for mailing.
-[^3]: Reset Password verification via email address. SendGrid API for mailing.
-[^4]: Profile Management, picture upload, ... (CRUD operations).
-[^5]: Routes Authentications,
-[^6]: REST API (passport, jsonwebtoken) for security.
-[^7]: Scheduling Job tasks.
+1. User account signup & sign in with Google oAuth and Local Account.
+2. New Account verification via email address. SendGrid API for mailing.
+3. Reset Password verification via email address. SendGrid API for mailing.
+4. Profile Management, picture upload, ... (CRUD operations).
+5. Routes Authentications,
+6. REST API (passport, jsonwebtoken) for security.
+7. Scheduling Job tasks.
 
 ## Pre-requisite
 
