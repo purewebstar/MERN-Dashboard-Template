@@ -1,8 +1,8 @@
 export const defaultTheme = {
     PRIMARY : {
-        MAIN: `#151515`,
-        DARK: `#151515`,
-        LIGHT: `#212121`,
+        MAIN: `#181e2b`,
+        DARK: `#181e2b`,
+        LIGHT: `#1c2331`,
     },
     SECONDARY: {
         MAIN: `#0099CC`,

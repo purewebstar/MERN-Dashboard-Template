@@ -22,8 +22,8 @@
  import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
  import { teal, purple, blue} from '@mui/material/colors';
  import Stack from '@mui/material/Stack';
- import AccountMenu from './AccountMenu';
- import NotificationMenu from './NotificationMenu';
+ import AMAccountMenu from './AMAccountMenu';
+ import AMNotificationMenu from './AMNotificationMenu';
  import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
  import MoreIcon from '@mui/icons-material/MoreVert';
  import config from '../../../constants/config';
@@ -290,7 +290,7 @@ const Topbar = props =>{
                     <NotificationsIcon sx={{ fontSize: 23 }}/>
                   </Badge>
                 </IconButton>
-                <NotificationMenu
+                <AMNotificationMenu
                   openNotification={openNotification}
                   handleClose={handleCloseNotification}
                   anchorEl={anchorElNotification}
@@ -317,7 +317,7 @@ const Topbar = props =>{
                   </IconButton>
                 </Tooltip>
 
-                <AccountMenu 
+                <AMAccountMenu 
                 handleCloseUserMenu={handleCloseUserMenu}
                 anchorElUser={anchorElUser}
                 role={props.role}

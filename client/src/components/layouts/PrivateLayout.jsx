@@ -4,8 +4,8 @@
  */
 import React from 'react';
 import {Outlet} from 'react-router-dom';
-import Topbar from './appbar/Topbar';
-import Bottombar from './appbar/Bottombar';
+import AMTopbar from './appbar/AMTopbar';
+import AMBottombar from './appbar/AMBottombar';
 
 const PrivateLayout = () =>{
 
@@ -19,7 +19,7 @@ const PrivateLayout = () =>{
      * 
      */
     }
-    <Topbar />
+    <AMTopbar />
 
     {
     /**
@@ -38,7 +38,7 @@ const PrivateLayout = () =>{
      * 
      */
     }
-    <Bottombar/>
+    <AMBottombar/>
    </>
   );
 }

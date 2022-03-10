@@ -1,6 +1,6 @@
 import React from 'react';
 import {Outlet} from 'react-router-dom';
-
+import AMFooter from './appbar/AMFooter';
 const PublicLayout = () =>{
 
   return (
@@ -21,6 +21,7 @@ const PublicLayout = () =>{
      */
     }
     <Outlet />
+    <AMFooter/>
    </>
   );
 }
