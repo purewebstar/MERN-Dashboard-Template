@@ -24,8 +24,6 @@ import { Link } from 'react-router-dom';
 import { teal, purple, blue, green, red} from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import config from '../../../constants/config';
-import siteLogo from '../../../assets/images/siteLogo.png';
 
 const fakeNotification = [
     {
@@ -142,28 +140,15 @@ const AMNotificationMenu = props => {
                                 }}
                                 >
                                     <IconButton sx={{mr:1, mt:1}}>
-                                        {
-                                            (n.displayName === 'GoWebBox' || n.displayName === 'gowebbox' || n.displayName === 'Gowebbox')?
-                                            <>
-                                                <Avatar alt={n&&n.displayName.charAt(0)} src={siteLogo}
-                                                sx={{
-                                                    mt: -5 ,width: 30, height: 30, 
-                                                    
-                                                }}
-                                                />
-                                            </>
-                                            :
-                                            <>
-                                            <Avatar alt={n&&n.avatar&&n.avatar}
-                                                src={n&&n.avatar&&n.avatar}
-                                                sx={{
-                                                    mt: -5 ,width: 30, height: 30, 
-                                                    bgcolor: (n&&n.photo)?'':(index==0)?green[500]: (index==1)?red[300]:
-                                                    (index==2)?blue[300]: (index==3)?teal[300]:purple[300]
-                                                }}
-                                                />
-                                            </>
-                                        }
+                                        <Avatar 
+                                        alt={n&&n.avatar&&n.avatar}
+                                        src={n&&n.avatar&&n.avatar}
+                                        sx={{
+                                        mt: -5 ,width: 30, height: 30, 
+                                        bgcolor: (n&&n.avatar)?'':(index==0)?green[500]: (index==1)?red[300]:
+                                        (index==2)?blue[300]: (index==3)?teal[300]:purple[300]
+                                        }}
+                                        />
                                     </IconButton>
                                     <Box>
                                         <Typography
