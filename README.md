@@ -349,13 +349,14 @@ const AccountJobs = require('./schedules/AccountJobs');
 AccountJobs(app);
 //
 ```
-
-## Contributions
-
-  
+## Contribution
+Let me know if you find any issue or difficulties.
 
 ## Author
+:man: **Abraham Mitiku** 
+- [Website](https://abraham-mitiku.com)
+- [Github](https://github.com/abriilo)
+- [Linkedin](https://www.linkedin.com/in/abrilo/)
 
-  
-
-## Show Support
+## If this helps
+Give this a :star: 
