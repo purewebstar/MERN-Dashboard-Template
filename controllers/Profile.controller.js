@@ -4,6 +4,7 @@
  *  importing Modules
  */
 const Profile = require('../models/Profile');
+const User = require('../models/User');
 const mongoose = require('mongoose');
 // directory paths
 const photoPath = './public/images/profile/';
@@ -133,7 +134,7 @@ const readProfile = {
                     $lookup:
                     {
                         from: `profiles`,
-                        localField: `user`,
+                        localField: `_id`,
                         foreignField: `user`,
                         as: `profileObj`
                     }

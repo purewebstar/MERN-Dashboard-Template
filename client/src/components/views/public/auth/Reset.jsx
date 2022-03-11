@@ -94,10 +94,11 @@ const Reset = props =>{
           const {data} = res;
           if (data.status) {
               setOpen(true)
+              setOpenDrop(false);
               setTimeout(()=>{
                 props.history.push('/auth/login');
               },2500)
-          } 
+          }  
       }).catch(err=>{
           setError('Something went wrong!');
           setOpenDrop(false)

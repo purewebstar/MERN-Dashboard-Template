@@ -16,7 +16,7 @@
  import Typography from '@mui/material/Typography';
  import IconButton from '@mui/material/IconButton'; 
  import siteLogo from '../../../assets/images/siteLogo.png';
- import { Link } from 'react-router-dom';
+ import { Link, useNavigate } from 'react-router-dom';
  import InputBase from '@mui/material/InputBase';
  import SearchIcon from '@mui/icons-material/Search';
  import Avatar from '@mui/material/Avatar';
@@ -32,6 +32,7 @@
  import { useDispatch, useSelector } from 'react-redux';
  import {GetProfile} from '../../../redux/actions/profileAction';
  import {readProfile} from '../../../api/profile.api';
+ import {tokens} from '../../../api/auth.api';
  
  
 const drawerWidth = 240;
@@ -126,22 +127,39 @@ const AppBar = styled(MuiAppBar, {
 
 const AMTopbar = props =>{
     const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const renewToken = async()=>{
+    let payload = await tokens.renew().then((res)=>{
+      const {data} = res;
+      if (data.status) {
+        localStorage.setItem('access', JSON.stringify(data.access));
+        return;
+      } 
+    }).catch(err=>{ 
+      //
+      navigate('/auth/user')
+    })
+    return;
+  }
   const userProfile = async ()=>{ 
-   let payload = await readProfile.auth.byId().then((res)=>{
+   let payload = await readProfile.auth.byId().then((res)=>{ 
      const {data} = res;
      if (data.status) {
        let profileData = data.data?data.data[0]: [];
        localStorage.setItem('profile', JSON.stringify(profileData));
        return profileData;
      } 
-   }).catch(err=>{
+   }).catch(err=>{ 
+     if(err.message === 'Request failed with status code 401'){
+      tokens.renew();
+      userProfile()
+     }
    })
-   dispatch(GetProfile.AUTH.BYID(payload));
+   dispatch(GetProfile.USERID(payload));
  }
-  const PROFILE = useSelector(state => state.profile).byId;
-
+  const PROFILE = useSelector(state => state.profile).userId;
   let profile = PROFILE? PROFILE : '';
+//  console.log(profile)
   React.useEffect(()=>{
     userProfile();
   },[]);

@@ -2,7 +2,7 @@
 
 const jwt = require('jsonwebtoken');
 
-/**
+/** 
  * 
  *  Token
  */
@@ -17,7 +17,7 @@ const tokens = {
         if(verified){
             const payload = {user_id: verified.payload.user_id};
             const accessToken = jwt.sign({payload}, process.env.ACCESS_KEY, {expiresIn: '1m'});
-            return res.status(201).json({accessToken: accessToken, status:true});
+            return res.status(201).json({access: accessToken, status:true});
         }
         else return res.status(401).json({message: 'error', status:false});
     },

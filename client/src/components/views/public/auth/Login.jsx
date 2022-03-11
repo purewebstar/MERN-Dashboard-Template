@@ -39,6 +39,7 @@ const Login = props =>{
   let navigate = useNavigate();
   let location = useLocation();
   const [error, setError] = React.useState("");
+  const [errorColor, setErrorColor] = React.useState('error');
   const [open, setOpen] = React.useState(false);
   const [required, setRequired] = React.useState({
     email: false,
@@ -85,7 +86,8 @@ const Login = props =>{
   await login.local(values.email, values.password).then((res)=>{
     const {data} = res;
     if (data.status) {
-      setError("");
+      setError("Success, redirecting ...");
+      setErrorColor('success');
       setLocalStorage("access", data.accessToken);
       setLocalStorage("user", data.data);
       setCookie('refresh', data.refreshToken, 7)
@@ -93,22 +95,24 @@ const Login = props =>{
         setOpen(false)
         let from = location.state?.from?.pathname || "/user";
         navigate(from, { replace: true });
-      },200)   
+      },500)   
     }
     else{
       setTimeout(()=>{
         setOpen(false)
-        navigate('/auth/notification/0') // notify to verify email address if not verified
-      },200)
+        navigate('/auth/notification/1') // notify to verify email address if not verified
+      },500)
     }
     }).catch(err=>{
       setOpen(false)
 
       if(err.message === 'Request failed with status code 404'){
         setError('User is not exist!');
+        setErrorColor('error');
       }
       else{
         setError('Error, Please try later!');
+        setErrorColor('error');
       }
   });
       
@@ -128,7 +132,8 @@ const Login = props =>{
       await login.google(email, firstName, lastName, imageUrl).then((res)=>{
         const {data} = res;
         if (data.status) {
-          setError("");
+          setError("Success, redirecting ...");
+          setErrorColor('success');
           setLocalStorage("access", data.accessToken);
           setLocalStorage("user", data.data);
           setCookie('refresh', data.refreshToken, 7)
@@ -136,12 +141,14 @@ const Login = props =>{
             setOpen(false)
             let from = location.state?.from?.pathname || "/user"; 
             navigate(from, { replace: true });
-          },200);
+          },500);
         } 
     }).catch(err=>{
       setOpen(false);
+      
     });
-    setOpen(false);
+    setError("You're offline.");
+    setErrorColor('error');
   }
 
   const [values, setValues] = React.useState({
@@ -230,7 +237,8 @@ const Login = props =>{
                    error?
                    <>
                    <AMAlert
-                   
+                    alertTextColor={errorColor}
+                    alertText={error}
                    />
                    </>
                    :

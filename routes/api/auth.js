@@ -15,5 +15,4 @@ const router = express.Router();
 // renew token 
 router.post('/renew-access/:token', tokens.renew);
 
-
 module.exports = router;
