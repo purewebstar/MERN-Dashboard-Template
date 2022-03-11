@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import SecurityRoundedIcon from '@mui/icons-material/SecurityRounded';
 import Avatar from '@mui/material/Avatar';
-import { blue} from '@mui/material/colors';
+import { blue, teal} from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import ProfileTabPane from './tabs/Profile';
 import SecurityTabPane from './tabs/Security';
@@ -89,9 +89,9 @@ const Profile = props => {
    })
    dispatch(GetProfile.USERID(payload));
  }
-  const PROFILE = useSelector(state => state.profile).byId;
+  const PROFILE = useSelector(state => state.profile).userId;
   let profile = PROFILE? PROFILE : '';
-  console.log(profile)
+ // console.log(profile)
   React.useEffect(()=>{
     userProfile();
   },[]);
@@ -99,7 +99,8 @@ const Profile = props => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  let joined = profile&&profile.joined&&profile.joined;
+  let joinedFormatted = new Date(joined);
   return (
    <>
    <Grid  
@@ -159,16 +160,15 @@ const Profile = props => {
             color: `#000000`,
         }}
         >
-        {profile&&profile.firstName?profile.firstName: ``} {profile&&profile.lastName?profile.lastName: ``} {`Abraham Mitiku`}
+        {profile&&profile.firstName?profile.firstName: ``} {profile&&profile.lastName?profile.lastName: ``}
         </Typography>
         <Typography
-        variant="h6"
         sx={{
             fontWeight: 600,
         }}
 
         >
-        joined: <b className={`text-success`}>{profile&&profile.email?profile.email : ``}</b>
+        joined: <b style={{color: teal[600]}} >{joinedFormatted&&joinedFormatted.toDateString()}</b>
         </Typography>
         </Box>
 

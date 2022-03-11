@@ -2,6 +2,12 @@
 /*
  importing modules
 */
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 const express = require('express');
 
 // profile controllers
@@ -30,7 +36,7 @@ router.post('/auth/upload-photo', checkAuthorized, photoUpload.single('photo'), 
  */
 router.patch('/auth/upload-photo', checkAuthorized, photoUpload.single('photo'), updateProfile.photo);// authorized router
 router.patch('/auth/update-personal', checkAuthorized, updateProfile.personal);// authorized router
-
+ 
 /**
  *  Read profile routes
  */

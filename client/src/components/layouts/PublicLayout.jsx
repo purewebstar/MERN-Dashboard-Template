@@ -1,3 +1,14 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+
+/**
+ * 
+ * 
+ */
 import React from 'react';
 import {Outlet} from 'react-router-dom';
 import AMFooter from './navigations/AMFooter';

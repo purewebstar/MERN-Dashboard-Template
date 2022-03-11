@@ -1,4 +1,10 @@
 /**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+/**
  *  Axios to fetch 
  *  Here, instance will intercept in every request and provide token to a server
  */

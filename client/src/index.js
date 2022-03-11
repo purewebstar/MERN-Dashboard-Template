@@ -1,3 +1,9 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

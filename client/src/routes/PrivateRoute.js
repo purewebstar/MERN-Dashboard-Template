@@ -1,3 +1,13 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+
+// PrivateRoute -> Authorized pages [views]
+
+//-------------------------------------------------------------------
 import React from 'react';
 import { Navigate, useLocation} from "react-router-dom";
 import {getCookie} from '../utils/Cookies';

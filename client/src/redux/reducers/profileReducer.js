@@ -1,4 +1,9 @@
-
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 const initialState = {
     userId: null,
 };
@@ -8,9 +13,9 @@ const profileReducer = (state = initialState, action)=>{
         case 'GET_PROFILE_BY_USER_ID': 
             return {
                 ...state,
-                byUserId: action.payload
+                userId: action.payload
             };
-        default:
+        default: 
             return state;
     }
 };

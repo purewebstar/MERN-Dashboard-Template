@@ -1,3 +1,9 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 // setting localStorage data's
 export const setLocalStorage = (key, value) =>{
   window.localStorage.setItem(key, JSON.stringify(value));

@@ -1,3 +1,9 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 import React from "react";
 import { useRoutes} from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';

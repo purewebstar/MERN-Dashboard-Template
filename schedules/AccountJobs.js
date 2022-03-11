@@ -1,3 +1,9 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 'use strict'
 /**
  *  Module dependencies
@@ -12,7 +18,7 @@ initAgenda.define(
       const { user_id } = job.attrs.data;
       let accountExpired = readAccount.verified(user_id);
       if(accountExpired){
-        // remove account
+        // remove account 
         removeAccount.expired(user_id);
         return
       }

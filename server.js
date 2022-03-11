@@ -1,3 +1,9 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');

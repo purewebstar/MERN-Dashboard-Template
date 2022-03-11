@@ -56,12 +56,12 @@ const AMBottombar = props =>{
               </StyledFab>
             </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <Link to='/user/feedback'>
+          <Link to='/user'>
           <IconButton color="inherit" aria-label="open drawer" id="mob-feedback" sx={{mr: 1,backgroundColor: `#2e3951`}}>
              <ChatRoundedIcon color="secondary" sx={{ fontSize: 25 }}/>
           </IconButton>
           </Link>
-          <Link to='/user/subscriber'>
+          <Link to='/user'>
           <IconButton color="inherit" aria-label="open drawer" id="mob-subscriber" sx={{backgroundColor: `#2e3951`}}>
             <PeopleOutlineRoundedIcon color="secondary" sx={{ fontSize: 25 }} />
           </IconButton>

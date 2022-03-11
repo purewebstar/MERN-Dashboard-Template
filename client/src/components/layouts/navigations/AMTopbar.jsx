@@ -215,7 +215,7 @@ const AMTopbar = props =>{
             />
             </Typography>
             <Search
-            sx={{
+            sx={{  
                 ...(open && { display: 'none' }),
               }}
             >
@@ -281,18 +281,6 @@ const AMTopbar = props =>{
                 Feedback
                 </Typography>
                 </Link>
-                <Link to='/user/subscriber'  >
-                    <Typography
-                      variant="h6"
-                      noWrap
-                      component="div"
-                      sx={{ display: { xs: 'none', sm: 'block' } , mt:2, color: `#ffffff`, fontWeight: 500}}                
-                      style={{padding: '5px', borderRadius: '5%', marginLeft: '15px'}}
-                      id="nav-subscriber"
-                    >
-                    Subscriber
-                    </Typography>
-                  </Link>
               </Box>
             <Box sx={{ flexGrow: 2}}/>
               <Box sx={{display: 'flex'}}>
@@ -324,10 +312,10 @@ const AMTopbar = props =>{
                           variant="dot"
                         >
                           <Avatar 
-                          alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
-                          src={profile.photo?
-                              config.WS_URL + 'images/profile/' + profile.photo: 
-                              profile&&profile.firstName&&profile.firstName.charAt(0)}
+                          alt={profile&&profile.firstName.charAt(0)} 
+                          src={profile&&profile.profileObj&&profile.profileObj.photo?
+                              config.WS_URL + 'images/profile/' + profile.profileObj.photo&&profile.profileObj.photo: 
+                              profile&&profile.firstName.charAt(0)}
                           sx={{width: 30, height: 30, bgcolor: blue[300]}}
                           />
                         </StyledBadge>

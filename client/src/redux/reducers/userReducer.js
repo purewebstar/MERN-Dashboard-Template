@@ -1,4 +1,9 @@
-
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 const initialState = {
     byId: null
 }

@@ -1,4 +1,10 @@
 /**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+/**
  *  Importing View Components [Pages] , Layouts && Routes
  */
 
@@ -100,10 +106,6 @@ children: [
         {
             path: "/user/feedback",
             element: <PrivateRoute><Dashboard /></PrivateRoute>,
-        },
-        {
-            path: "/user/subscriber",
-            element: <PrivateRoute><Subscribers /></PrivateRoute>,
         },
     ],
 },

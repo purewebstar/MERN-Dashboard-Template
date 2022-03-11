@@ -1,3 +1,9 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 'use strict'
 
 /**
@@ -150,7 +156,7 @@ const readProfile = {
                     }
                 },
             ], (err,success)=>{
-               // console.log(success)
+                //console.log(success)
                 if(err) return res.status(400).json({message: 'Something went wrong!', status:false})
                 else if(!success) return res.status(404).json({message: 'Error', status:false});
                 else return res.status(200).json({data: success,status:true})

@@ -1,3 +1,9 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
 export const defaultTheme = {
     PRIMARY : {
         MAIN: `#181e2b`,
