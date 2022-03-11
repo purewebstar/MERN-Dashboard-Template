@@ -260,7 +260,7 @@ const readAccount = {
                         const refreshToken = jwt.sign({payload}, process.env.REFRESH_KEY, {expiresIn: '7d'});
                         return res                           
                             .status(200)
-                            .json({ data: success, accessToken: accessToken, refreshToken:refreshToken, message: "success" ,status: true});
+                            .json({ data: success&&success[0], accessToken: accessToken, refreshToken:refreshToken, message: "success" ,status: true});
 
                     }
                 });

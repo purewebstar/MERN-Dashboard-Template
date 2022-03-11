@@ -75,15 +75,16 @@ const AMAccountMenu = props => {
                     <Avatar 
                     alt={props.profile&&props.profile.firstName.charAt(0)} 
                     src={props.profile&&props.profile.profileObj&&props.profile.profileObj.photo?
-                        config.WS_URL + 'images/profile/' + props.profile.profileObj.photo&&props.profile.profileObj.photo: 
+                        `${config.WS_URL}images/profile/${props.profile.profileObj&&props.profile.profileObj.photo&&props.profile.profileObj.photo}`: 
                         props.profile&&props.profile.firstName.charAt(0)}
                     sx={{width: 50, height: 50, p: 0, mb:1, mt:1, mb:1, left: '35%'}}
                     />
                     <Typography
                     variant="h6"
                     noWrap
-                    component="div"    
-                    sx={{color: `#000000`, fontWeight: 600, mb:1, mt:2}}            
+                    component="div"   
+                    color="secondary" 
+                    sx={{ fontWeight: 600, mb:1, mt:2}}            
                     >
                    {props.profile&&props.profile.displayName&&props.profile.displayName}
                     </Typography>

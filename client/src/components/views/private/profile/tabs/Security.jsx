@@ -11,7 +11,7 @@ import {updateAccount} from '../../../../../api/user.api';
 import {setLocalStorage} from '../../../../../utils/Storage';
 import AMSnackbar from '../../../../../components/layouts/feedbacks/AMSnackbar';
 
-const Security = props => {
+const Security = props => { 
 
   const[error, setError] = React.useState(null);
   const[errorColor, setErrorColor] = React.useState(null);

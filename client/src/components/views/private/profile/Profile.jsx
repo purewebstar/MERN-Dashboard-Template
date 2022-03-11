@@ -13,14 +13,24 @@ import ProfileTabPane from './tabs/Profile';
 import SecurityTabPane from './tabs/Security';
 import { useDispatch, useSelector } from 'react-redux';
 import {GetProfile} from '../../../../redux/actions/profileAction';
-import {readProfile} from '../../../../api/profile.api';
+import {readProfile, createProfile} from '../../../../api/profile.api';
 import config from '../../../../constants/config';
-import { Button } from '@mui/material';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom'; 
 import Grid from '@mui/material/Grid';
 import {tokens} from '../../../../api/auth.api';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import {setLocalStorage} from '../../../../utils/Storage';
+import {setLocalStorage, getLocalStorage} from '../../../../utils/Storage';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
+
+const Input = styled('input')({
+  display: 'none',
+});
+
+const userData = getLocalStorage('user');
+let profile = userData?userData: {};
 
 const TabPanel = props =>{
   const { children, value, index, ...other } = props;
@@ -64,21 +74,55 @@ const Profile = props => {
     let payload = await tokens.renew().then((res)=>{
       const {data} = res;
       if (data.status) {
-        setLocalStorage('access', JSON.stringify(data.access));
+        setLocalStorage('access', data.access);
         return;
       } 
     }).catch(err=>{ 
       //
-      navigate('/auth/user')
+      navigate('/auth/login')
     })
     return;
   }
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const photoFile = React.useRef(null);
+  const handleOpenFileDialog = ()=>{
+    photoFile.current.click();
+  }
+  const handleOnFileChange = async (e)=>{
+    e.preventDefault();
+    const formData = new FormData()
+    formData.append('photo', e.target.files[0])
+    let payload = await createProfile.photo(formData).then((res)=>{
+      const {data} = res;
+      if(data.status){
+        setAnchorEl(null);
+        userProfile();
+        return;
+      }
+      }).catch(err=>{
+        if(err.message === 'Request failed with status code 401'){
+          renewToken();
+          handleOnFileChange();
+        }
+        setAnchorEl(null);
+      });
+      return payload;
+    
+  }
+
   const userProfile = async ()=>{ 
    let payload = await readProfile.auth.byId().then((res)=>{
      const {data} = res;
      if (data.status) {
        let profileData = data.data?data.data[0]: [];
-       setLocalStorage('profile', JSON.stringify(profileData));
+       setLocalStorage('user', profileData);
        return profileData;
      } 
    }).catch(err=>{
@@ -90,7 +134,7 @@ const Profile = props => {
    dispatch(GetProfile.USERID(payload));
  }
   const PROFILE = useSelector(state => state.profile).userId;
-  let profile = PROFILE? PROFILE : '';
+//  let profile = PROFILE? PROFILE : '';
  // console.log(profile)
   React.useEffect(()=>{
     userProfile();
@@ -139,8 +183,8 @@ const Profile = props => {
         <IconButton>
             <Avatar 
             alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
-            src={profile.photo?
-            config.WS_URL + 'images/profile/' + profile.photo: 
+            src={profile.profileObj&&profile.profileObj.photo?
+            `${config.WS_URL}images/profile/${profile.profileObj&&profile.profileObj.photo&&profile.profileObj.photo}`: 
             profile&&profile.firstName&&profile.firstName.charAt(0)}
             sx={{
                 width: 90, height: 90, 
@@ -168,7 +212,7 @@ const Profile = props => {
         }}
 
         >
-        joined: <b style={{color: teal[600]}} >{joinedFormatted&&joinedFormatted.toDateString()}</b>
+        joined: <b style={{color: teal[600]}} >{joinedFormatted?joinedFormatted.toDateString(): ``}</b>
         </Typography>
         </Box>
 
@@ -178,10 +222,26 @@ const Profile = props => {
 
           }}
         >
-          <IconButton>
-          <CloudUploadIcon color="secondary" sx={{fontSize: 23}}/>
+          <IconButton
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+          >
+            <CloudUploadIcon color="error" sx={{fontSize: 23}}/>
           </IconButton>
-
+          <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+          >
+        <MenuItem onClick={handleOpenFileDialog}>Upload Picture</MenuItem>
+        </Menu>
+        <Input type="file" accept="image/x-png,image/gif,image/jpeg" ref={photoFile} onChange={handleOnFileChange} />
         </Box>
         </Box>
         <Box
@@ -227,13 +287,13 @@ const Profile = props => {
         <TabPanel value={value} index={0}>
             <ProfileTabPane
             handleProfile={userProfile}
-            profile={profile}
+            profile={profile&&profile}
             />
         </TabPanel>
         <TabPanel value={value} index={1}>
             <SecurityTabPane
             handleProfile={userProfile}
-            profile={profile}
+            profile={profile&&profile}
             /> 
         </TabPanel>
         </Box>

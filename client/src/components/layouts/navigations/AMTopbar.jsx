@@ -8,33 +8,31 @@
  *     AMTopbar
  */
 //--------------------------------------------------------------------
- import React from 'react';
- import { styled, useTheme, alpha } from '@mui/material/styles';
- import Box from '@mui/material/Box';
- import MuiAppBar from '@mui/material/AppBar';
- import Toolbar from '@mui/material/Toolbar';
- import Typography from '@mui/material/Typography';
- import IconButton from '@mui/material/IconButton'; 
- import siteLogo from '../../../assets/images/siteLogo.png';
- import { Link, useNavigate } from 'react-router-dom';
- import InputBase from '@mui/material/InputBase';
- import SearchIcon from '@mui/icons-material/Search';
- import Avatar from '@mui/material/Avatar';
- import Badge from '@mui/material/Badge';
- import NotificationsIcon from '@mui/icons-material/Notifications';
- import Tooltip from '@mui/material/Tooltip';
- import { teal, purple, blue} from '@mui/material/colors';
- import Stack from '@mui/material/Stack';
- import AMAccountMenu from './AMAccountMenu';
- import AMNotificationMenu from './AMNotificationMenu';
- import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
- import config from '../../../constants/config';
- import { useDispatch, useSelector } from 'react-redux';
- import {GetProfile} from '../../../redux/actions/profileAction';
- import {readProfile} from '../../../api/profile.api';
- import {tokens} from '../../../api/auth.api';
+import React from 'react';
+import { styled, useTheme, alpha } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton'; 
+import siteLogo from '../../../assets/images/siteLogo.png';
+import { Link, useNavigate } from 'react-router-dom';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Tooltip from '@mui/material/Tooltip';
+import { teal, purple, blue} from '@mui/material/colors';
+import Stack from '@mui/material/Stack';
+import AMAccountMenu from './AMAccountMenu';
+import AMNotificationMenu from './AMNotificationMenu';
+import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
+import config from '../../../constants/config';
+import {getLocalStorage} from '../../../utils/Storage';
  
- 
+const userData = getLocalStorage('user');
+let profile = userData?userData: {};
 const drawerWidth = 240;
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -126,44 +124,6 @@ const AppBar = styled(MuiAppBar, {
 
 
 const AMTopbar = props =>{
-    const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const renewToken = async()=>{
-    let payload = await tokens.renew().then((res)=>{
-      const {data} = res;
-      if (data.status) {
-        localStorage.setItem('access', JSON.stringify(data.access));
-        return;
-      } 
-    }).catch(err=>{ 
-      //
-      navigate('/auth/user')
-    })
-    return;
-  }
-  const userProfile = async ()=>{ 
-   let payload = await readProfile.auth.byId().then((res)=>{ 
-     const {data} = res;
-     if (data.status) {
-       let profileData = data.data?data.data[0]: [];
-       localStorage.setItem('profile', JSON.stringify(profileData));
-       return profileData;
-     } 
-   }).catch(err=>{ 
-     if(err.message === 'Request failed with status code 401'){
-      tokens.renew();
-      userProfile()
-     }
-   })
-   dispatch(GetProfile.USERID(payload));
- }
-  const PROFILE = useSelector(state => state.profile).userId;
-  let profile = PROFILE? PROFILE : '';
-//  console.log(profile)
-  React.useEffect(()=>{
-    userProfile();
-  },[]);
-
   const [open, setOpen] = React.useState(false);
   const [openNotification, setOpenNotification] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -312,9 +272,9 @@ const AMTopbar = props =>{
                           variant="dot"
                         >
                           <Avatar 
-                          alt={profile&&profile.firstName.charAt(0)} 
+                          alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
                           src={profile&&profile.profileObj&&profile.profileObj.photo?
-                              config.WS_URL + 'images/profile/' + profile.profileObj.photo&&profile.profileObj.photo: 
+                            `${config.WS_URL}images/profile/${profile.profileObj&&profile.profileObj.photo&&profile.profileObj.photo}`: 
                               profile&&profile.firstName.charAt(0)}
                           sx={{width: 30, height: 30, bgcolor: blue[300]}}
                           />

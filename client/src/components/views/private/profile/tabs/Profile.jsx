@@ -8,17 +8,12 @@ import { Grid } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import {updateProfile, createProfile} from '../../../../../api/profile.api';
-import {setLocalStorage, getLocalStorage} from '../../../../../utils/Storage';
-import { styled } from '@mui/material/styles';
 import AMSnackbar from '../../../../../components/layouts/feedbacks/AMSnackbar';
-
-const Input = styled('input')({
-  display: 'none',
-});
-
+import {tokens} from '../../../../../api/auth.api';
+import {setLocalStorage, getLocalStorage} from '../../../../../utils/Storage';
+import {useNavigate} from 'react-router-dom';
 
 const Profile = props => {
-  const photoFile = React.useRef(null);
   const[values, setValues] = React.useState({
     firstName: '',
     lastName: '',
@@ -27,6 +22,21 @@ const Profile = props => {
     city: '',
     country: '',
   }) 
+  const navigate = useNavigate();
+  const renewToken = async()=>{
+    let payload = await tokens.renew().then((res)=>{
+      const {data} = res;
+      if (data.status) {
+        setLocalStorage('access', data.access);
+        return;
+      } 
+    }).catch(err=>{ 
+      //
+      navigate('/auth/login')
+    })
+    return;
+  }
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -41,51 +51,18 @@ const Profile = props => {
         setOpenSnackbar(true);
         setErrorColor('success')
         setError(data.message)
-        props.handleProfile();
+        props.handleProfile(); 
       }
       }).catch(err=>{
+        if(err.message === 'Request failed with status code 401'){
+          renewToken();
+          handlePersonal();
+         }
         setErrorColor('error')
         setError('Unable to update!');
       });
       return payload;
   }
-  const handleOpenFileDialog = ()=>{
-    photoFile.current.click();
-  }
-  const handleOnFileChange = async (e)=>{
-    e.stopPropagation();
-    e.preventDefault();
-    const formData = new FormData()
-    formData.append('photo', e.target.files[0])
-    let payload = await createProfile.photo(formData).then((res)=>{
-      const {data} = res;
-      if(data.status){
-        setOpenSnackbar(true);
-        props.userProfile();
-        setAnchorEl(null);
-        setErrorColor('success')
-        setError(data.message)
-        return;
-      }
-      }).catch(err=>{
-        setErrorColor('error')
-        setError('Unable to update!');
-        setAnchorEl(null);
-      });
-      return payload;
-    
-  }
-
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const[error, setError] = React.useState(null);
   const[errorColor, setErrorColor] = React.useState(null);
