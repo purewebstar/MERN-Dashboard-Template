@@ -13,32 +13,49 @@ These instructions will guide you on how to use and integrate with your design o
   
 ## Features
 :white_check_mark: Signup & Sign-in with Google OAuth and Local Account.
+
 :white_check_mark: New account verification via email address.
+
 :white_check_mark: Reset password verification via email address.
+
 :white_check_mark: Profile Management, picture upload, ...(CRUD operations).
+
 :white_check_mark: React Routes authentications.
+
 :white_check_mark: REST API with (passport, jsonwebtoken) for authentication.
+
 :white_check_mark: Scheduling Job tasks.
 
   
 ## Pre-requisite
 :exclamation: npm + (node) latest version [nodejs](https://nodejs.org/en/download/)
+
 :exclamation: React 16.8++ [ReactJs](https://reactjs.org/)
+
 :exclamation: React Router V6 [react-router-dom](https://reactrouter.com/docs/en/v6/getting-started/overview)
+
 :exclamation: Material UI [MUI](https://mui.com/getting-started/installation/)
+
 :exclamation: MongoDB setup [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
+
 :grey_exclamation: @SendGrid API setup [SendGridAPI](https://sendgrid.com/)
+
 :grey_exclamation: Google oAuth setup [Google Console](https://console.cloud.google.com/)
 
 
 ## Frameworks / Tools
 ### **Backend**
 :heavy_check_mark: Node.js
+
 :heavy_check_mark: Express.js
+
 ### **Frontend**
 :heavy_check_mark: React.js
+
 :heavy_check_mark: Material-UI
+
 :heavy_check_mark: Redux
+
 ### **Database**
 :heavy_check_mark: MongodDB
 
@@ -46,7 +63,7 @@ These instructions will guide you on how to use and integrate with your design o
 ## Installation
 - [x] **Backend setup**
 > In the current/main directory folder run this command, Which will install all dependencies for [Backend]
-```
+```bash
 > npm install --save
 ```
 > Add Environmental variable **.env** file! and add accordingly
@@ -70,7 +87,7 @@ SECRET_SITE_EMAIL_PASSWORD= ? // your sendgrid connected -> password
 ```
 - [x] **Frontend setup**
 > In the current/main directory folder run this command, Which will install all dependencies for [Frontend]
-```
+```bash
 > cd client
 > npm install --save
 ```
