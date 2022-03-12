@@ -34,7 +34,6 @@ const AMAccountMenu = props => {
       e.preventDefault();
 
       window.localStorage.removeItem('access');
-      deleteCookie('refresh');
       setTimeout(()=>{
         navigate('/auth/login')
       },300)
@@ -72,7 +71,8 @@ const AMAccountMenu = props => {
                 >
                     <Avatar 
                     alt={props.profile&&props.profile.firstName.charAt(0)} 
-                    src={props.profile&&props.profile.profileObj&&props.profile.profileObj.photo?
+                    src={props.profile&&props.profile.profileObj&&props.profile.profileObj.photo? (props.profile.profileObj.photo.includes("https://lh3.googleusercontent.com/"))?
+                    props.profile&&props.profile.profileObj.photo:
                         `${config.WS_URL}images/profile/${props.profile.profileObj&&props.profile.profileObj.photo&&props.profile.profileObj.photo}`: 
                         props.profile&&props.profile.firstName.charAt(0)}
                     sx={{width: 50, height: 50, p: 0, mb:1, mt:1, mb:1, left: '35%'}}

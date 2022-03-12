@@ -88,8 +88,11 @@ const Login = props =>{
     if (data.status) {
       setError("Success, redirecting ...");
       setErrorColor('success');
+      window.localStorage.removeItem('access');
+      window.localStorage.removeItem('user');
       setLocalStorage("access", data.accessToken);
-      setLocalStorage("user", data.data);
+      let profileData = data.data?data.data[0]: [];
+       setLocalStorage('user', profileData);
       setCookie('refresh', data.refreshToken, 7)
       setTimeout(()=>{
         setOpen(false)
@@ -134,8 +137,11 @@ const Login = props =>{
         if (data.status) {
           setError("Success, redirecting ...");
           setErrorColor('success');
-          setLocalStorage("access", data.accessToken);
-          setLocalStorage("user", data.data);
+          window.localStorage.removeItem('access');
+          window.localStorage.removeItem('user');
+          setLocalStorage("access", data.access);
+          let profileData = data.data?data.data[0]: [];
+          setLocalStorage('user', profileData);
           setCookie('refresh', data.refreshToken, 7)
           setTimeout(()=>{
             setOpen(false)
@@ -209,7 +215,7 @@ const Login = props =>{
               borderRadius: 2,
               backgroundColor: 'rgba(0, 0, 0, 0.1)',
               border: 1,
-              borderColor: `#e0e0e0`,
+              borderColor: `#e0e0e0`, 
             }}
             >
             <Avatar sx={{m: 'auto', bgcolor: '#e65100' }}>
@@ -218,10 +224,20 @@ const Login = props =>{
             <Typography variant="h5" sx={{fontWeight: 700, mb:1, mt:1, textAlign: 'center', color: '#b71c1c'}}>
               Sign In
             </Typography>
+            <GoogleLogin
+            clientId={config.GOOGLE_CLIENT_ID}
+            render={renderProps => (
             <Button variant="contained"
-            color={`error`}  sx={{height:40, width: `100%`}}>
+            color={`error`} onClick={renderProps.onClick} disabled={renderProps.disabled}  sx={{height:40, width: `100%`}}>
               <GoogleIcon sx={{fontSize: 25}} />  &nbsp; &nbsp;<b >Continue with Google</b>
             </Button>
+            )}
+            buttonText="Login"
+            onSuccess={handleGoogleLogin}
+            onFailure={handleGoogleLogin}
+            cookiePolicy={'single_host_origin'}
+          />
+
             </Box>
           </Box>
           <Box component="form" onSubmit={handleLocalLogin} noValidate sx={{ mt: -3, p:4 }}>

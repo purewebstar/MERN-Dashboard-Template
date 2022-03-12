@@ -31,8 +31,6 @@ import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateR
 import config from '../../../constants/config';
 import {getLocalStorage} from '../../../utils/Storage';
  
-const userData = getLocalStorage('user');
-let profile = userData?userData: '';
 const drawerWidth = 240;
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -125,6 +123,8 @@ const AppBar = styled(MuiAppBar, {
 
 const AMTopbar = props =>{
   const [open, setOpen] = React.useState(false);
+  const userData = getLocalStorage('user');
+  let profile = userData?userData: '';
   const [openNotification, setOpenNotification] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElNotification, setAnchorElNotification] = React.useState(null);
@@ -286,8 +286,9 @@ const AMTopbar = props =>{
                         >
                           <Avatar 
                           alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
-                          src={profile&&profile.profileObj&&profile.profileObj.photo?
-                            `${config.WS_URL}images/profile/${profile.profileObj&&profile.profileObj.photo&&profile.profileObj.photo}`: 
+                          src={profile&&profile.profileObj&&profile.profileObj.photo? (profile.profileObj.photo.includes("https://lh3.googleusercontent.com/"))?
+                              profile&&profile.profileObj.photo: 
+                             `${config.WS_URL}images/profile/${profile.profileObj&&profile.profileObj.photo&&profile.profileObj.photo}`: 
                               profile&&profile.firstName.charAt(0)}
                           sx={{width: 30, height: 30, bgcolor: blue[300]}}
                           />

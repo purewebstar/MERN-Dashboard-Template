@@ -248,15 +248,21 @@ const Register = props =>{
         await login.google(email, firstName, lastName, imageUrl).then((res)=>{
           const {data} = res;
           if (data.status) {
-            setLocalStorage("access", data.accessToken);
-            setCookie('user', data.data, 7)
+            setError("Success, redirecting ...");
+            setErrorColor('success');
+            window.localStorage.removeItem('access');
+            window.localStorage.removeItem('user');
+            setLocalStorage("access", data.access);
+            let profileData = data.data?data.data[0]: [];
+            setLocalStorage('user', profileData);
+            setCookie('refresh', data.refreshToken, 7)
             setTimeout(()=>{
               setOpen(false)
-              setCookie('refresh', data.refreshToken, 7)
-              let from = location.state?.from?.pathname || "/user"; 
+              let from = location.state?.from?.pathname || "/user";
               navigate(from, { replace: true });
-            },1500);    
+            },500)     
           } 
+          
       }).catch(err=>{
         setOpen(false);
       });
@@ -366,21 +372,30 @@ const Register = props =>{
               p:2,
               mt:-6,
               borderRadius: 2,
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              backgroundColor: 'rgba(0, 0, 0, 0.1)', 
               border: 1,
               borderColor: `#e0e0e0`,
             }}
-            >
+            > 
             <Avatar sx={{m: 'auto', bgcolor: '#e65100' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography variant="h5" sx={{fontWeight: 700, mb:1, mt:1, textAlign: 'center', color: '#b71c1c'}}>
               Sign Up
             </Typography>
-            <Button variant="contained"
-            color={`error`}  sx={{height:40, width: `100%`}}>
-              <GoogleIcon sx={{fontSize: 25}} />  &nbsp; &nbsp;<b >Continue with Google</b>
-            </Button>
+            <GoogleLogin
+              clientId={config.GOOGLE_CLIENT_ID}
+              render={renderProps => (
+              <Button variant="contained"
+              color={`error`}  onClick={renderProps.onClick} disabled={renderProps.disabled}  sx={{height:40, width: `100%`}}>
+                <GoogleIcon sx={{fontSize: 25}} />  &nbsp; &nbsp;<b >Continue with Google</b>
+              </Button>
+              )}
+              buttonText="Register"
+                onSuccess={handleGoogleRegister}
+                onFailure={handleGoogleRegister} 
+                cookiePolicy={'single_host_origin'}
+            />
             </Box>
           </Box>
           <Box component="form" onSubmit={handleRegister} noValidate sx={{ mt: -4, p:4, width: `100%` }}>

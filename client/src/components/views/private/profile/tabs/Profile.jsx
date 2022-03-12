@@ -63,7 +63,9 @@ const Profile = props => {
   const[error, setError] = React.useState(null);
   const[errorColor, setErrorColor] = React.useState(null);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
-
+  const handleSnackBar = ()=>{
+    setOpenSnackbar(false)
+  }
     return (
         <>
          
@@ -71,6 +73,7 @@ const Profile = props => {
          open={openSnackbar}
          alertText={error}
          alertColor={errorColor}
+         handleClose={handleSnackBar}
          />
          <Box
         sx={{

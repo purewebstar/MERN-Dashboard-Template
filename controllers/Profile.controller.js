@@ -44,7 +44,7 @@ const createProfile = {
             })
         }
     },
-    // create/upload photo
+    // create/upload photo 
     photo: async(req,res, next)=>{
         // Accepting requests
         const photo = req.file.filename;
@@ -53,10 +53,16 @@ const createProfile = {
         if(isExist){
             if(isExist.photo){
                 const oldPhoto = isExist.photo;
-                const fullPhotoPathName = photoPath+oldPhoto;
-                fs.unlink(fullPhotoPathName, ()=>{
+                let isGooglePhoto = (oldPhoto.includes("https://lh3.googleusercontent.com/"));
+                // skip if it's a google photo
+                if(isGooglePhoto){
                     next();
-                });
+                }else{ // remove file
+                    const fullPhotoPathName = photoPath+oldPhoto;
+                    fs.unlink(fullPhotoPathName, (err)=>{
+                        next();
+                    });
+                }
             }
             else next(); 
         }

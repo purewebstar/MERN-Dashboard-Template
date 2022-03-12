@@ -107,9 +107,41 @@ const createAccount = {
             const payload = {user_id: user_id};
             const accessToken = jwt.sign({payload}, process.env.ACCESS_KEY, {expiresIn: '1m'});
             const refreshToken = jwt.sign({payload}, process.env.REFRESH_KEY, {expiresIn: '7d'});
-            return res
-                .status(200)
-                .json({ data: success, accessToken: accessToken, refreshToken:refreshToken, message: "success",status:true });
+            let valid_user = mongoose.Types.ObjectId(success._id);
+            User.aggregate([
+                {
+                    $match: {_id: valid_user}
+                },
+                {
+                    $lookup:
+                    {
+                        from: `profiles`,
+                        localField: `_id`,
+                        foreignField: `user`,
+                        as: `profileObj`
+                    }
+                },
+                {
+                    $unwind: '$profileObj'
+                },
+                {
+                    $project: 
+                    {
+                        password: 0,
+                        __v: 0
+                    }
+                },
+            ], 
+                (err,success)=>{
+                if(err) return res.status(400).json({message: 'Something went wrong!', status:false})
+                else if(!(success[0])) return res.status(404).json({message: 'User Not Found!', status:false});
+                else{
+                    return res
+                    .status(200)
+                    .json({ data: success, access: accessToken, refreshToken:refreshToken, message: "success",status:true });
+                }
+            })
+            
          }
       })
     },
@@ -237,6 +269,9 @@ const readAccount = {
                         }
                     },
                     {
+                        $unwind: '$profileObj'
+                    },
+                    {
                         $project: 
                         {
                             password: 0,
@@ -291,6 +326,9 @@ const readAccount = {
                 }
             },
             {
+                $unwind: '$profileObj'
+            },
+            {
                 $project: 
                 {
                     password: 0,
@@ -310,7 +348,7 @@ const readAccount = {
             return res
                 
                 .status(200)
-                .json({ data: success, accessToken: accessToken, refreshToken:refreshToken, message: "success", status:true });
+                .json({ data: success, access: accessToken, refreshToken:refreshToken, message: "success", status:true });
               
            }
         });

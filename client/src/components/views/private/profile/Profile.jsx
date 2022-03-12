@@ -27,17 +27,14 @@ import Grid from '@mui/material/Grid';
 import {tokens} from '../../../../api/auth.api';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {setLocalStorage, getLocalStorage} from '../../../../utils/Storage';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
+import AMBackdrop from '../../../../components/layouts/feedbacks/AMBackdrop'; 
 
 const Input = styled('input')({
   display: 'none',
 });
-
-const userData = getLocalStorage('user');
-let profile = userData?userData: {};
 
 const TabPanel = props =>{
   const { children, value, index, ...other } = props;
@@ -74,6 +71,8 @@ const a11yProps = index =>{
 }
 
 const Profile = props => {
+  const userData = getLocalStorage('user');
+  let profile = userData?userData: '';
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
@@ -105,22 +104,26 @@ const Profile = props => {
     photoFile.current.click();
   }
   const handleOnFileChange = async (e)=>{
+    setOpenDrop(true);
     e.preventDefault();
     const formData = new FormData()
     formData.append('photo', e.target.files[0])
     let payload = await createProfile.photo(formData).then((res)=>{
       const {data} = res;
       if(data.status){
-        setAnchorEl(null);
         userProfile();
-        return;
+        handleClose()
+        setTimeout(()=>{        
+          setOpenDrop(false);
+        },1500) // you can change this delay ...
       }
       }).catch(err=>{
         if(err.message === 'Request failed with status code 401'){
           renewToken();
           handleOnFileChange();
         }
-        setAnchorEl(null);
+        handleClose();
+        setOpenDrop(false);
       });
       return payload;
     
@@ -154,14 +157,18 @@ const Profile = props => {
   };
   let joined = profile&&profile.joined&&profile.joined;
   let joinedFormatted = new Date(joined);
+  const [openDrop, setOpenDrop] = React.useState(false);
   return (
    <>
+   <AMBackdrop
+    open={openDrop}
+    />
    <Grid  
     container
     justifyContent="center"
     alignItems="center" 
     spacing={3}
-    sx={{
+    sx={{ 
         mb:0
     }}
     className={``}
@@ -192,7 +199,8 @@ const Profile = props => {
         <IconButton>
             <Avatar 
             alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
-            src={profile.profileObj&&profile.profileObj.photo?
+            src={profile.profileObj&&profile.profileObj.photo?(profile.profileObj.photo.includes("https://lh3.googleusercontent.com/"))?
+            profile&&profile.profileObj.photo:
             `${config.WS_URL}images/profile/${profile.profileObj&&profile.profileObj.photo&&profile.profileObj.photo}`: 
             profile&&profile.firstName&&profile.firstName.charAt(0)}
             sx={{
