@@ -21,7 +21,7 @@ const createProfile = {
     // create personal info
     personal: async(req,res, next)=>{
         // Accepting requests
-        const {address, phone, bio} = req.body
+        const {location, phone, bio} = req.body
         const User_id = req.user.payload.user_id;
         const isExist = await Profile.findOne({user: User_id}).clone();
         if(isExist){
@@ -29,7 +29,7 @@ const createProfile = {
         }
         else{
             const newProfile = Profile({
-                address: address,
+                location: location,
                 phone: phone,
                 bio: bio,
                 user: User_id
@@ -40,7 +40,7 @@ const createProfile = {
                 // if profile not found
                 else if(success == null)  return res.status(404).json({messsage: "Unable to create profile!", status:false})
                 // if created
-                else return res.status(201).json({profile: success,messsage: 'Profile created successfully!', status:true})
+                else return res.status(201).json({profile: success,message: 'Profile created successfully!', status:true})
             })
         }
     },
@@ -54,10 +54,7 @@ const createProfile = {
             if(isExist.photo){
                 const oldPhoto = isExist.photo;
                 const fullPhotoPathName = photoPath+oldPhoto;
-                fs.unlink(fullPhotoPathName, function(err) {
-                    if (err) {
-                    return console.error(err.message);
-                    }
+                fs.unlink(fullPhotoPathName, ()=>{
                     next();
                 });
             }
@@ -89,18 +86,18 @@ const updateProfile = {
     */
     personal: async(req, res)=>{
         //const User_id = req.User.User_id;
-        const { address,phone, bio} = req.body;
+        const { location,phone, bio} = req.body;
         const User_id = req.user.payload.user_id;
         await Profile.findOneAndUpdate({user: User_id}, {
             $set: {
-                address: address,
+                location: location,
                 phone: phone,
                 bio: bio,
             }
         },  async (err, updatedPersonalInfo) =>{
             if(err) return res.status(404).json({messsage: err.message})
             else if(updatedPersonalInfo == null) res.status(404).json({message: "Unable to update profile!", status:false})
-            else return res.status(201).json({profile: updatedPersonalInfo,messsage: 'Profile updated successfully!', status:true})
+            else return res.status(201).json({profile: updatedPersonalInfo, message: 'Profile updated successfully!', status:true})
         }).clone();
     },
     /**
@@ -159,7 +156,7 @@ const readProfile = {
                 //console.log(success)
                 if(err) return res.status(400).json({message: 'Something went wrong!', status:false})
                 else if(!success) return res.status(404).json({message: 'Error', status:false});
-                else return res.status(200).json({data: success,status:true})
+                else return res.status(200).json({data: success, message: 'Success', status:true})
             });
             
         }

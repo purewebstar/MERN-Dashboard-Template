@@ -22,7 +22,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const AMSnackbar = ({alertText, alertTextColor, duration, anchorOrigin, open, handleClose}) => {
 
     const handleCloseSnackbar = () => {
-      handleClose()
+      handleClose();
     };
 
     return (

@@ -50,7 +50,7 @@ router.get('/auth/read-account', checkAuthorized, readAccount.byId); // authoriz
  *  Update routes
  */
 // update password
-router.patch('/auth/update-password', checkAuthorized, updateAccount.newAccount); // authorized routes
+router.patch('/auth/update-password', checkAuthorized, updateAccount.updatePassword); // authorized routes
 // new account 
 router.patch('/new-account',  updateAccount.newAccount);
 // reset password

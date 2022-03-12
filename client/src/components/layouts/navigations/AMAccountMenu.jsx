@@ -16,7 +16,6 @@ import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { teal, blue} from '@mui/material/colors';
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -36,7 +35,6 @@ const AMAccountMenu = props => {
 
       window.localStorage.removeItem('access');
       deleteCookie('refresh');
-
       setTimeout(()=>{
         navigate('/auth/login')
       },300)

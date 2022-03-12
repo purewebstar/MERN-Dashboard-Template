@@ -11,11 +11,7 @@
 const mongoose = require('mongoose');
 
 const ProfileSchema = mongoose.Schema({
-    address: {
-        city: String,
-        subCity: String,
-        country: String
-    },  
+    location: String,
     phone: Number,
     photo: String,
     phone: String,

@@ -52,7 +52,7 @@ const TabPanel = props =>{
   </div>
   );
 }
-
+ 
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
@@ -74,6 +74,8 @@ const Profile = props => {
     let payload = await tokens.renew().then((res)=>{
       const {data} = res;
       if (data.status) {
+        // if success, remove old token and replace with a renewed
+        window.localStorage.removeItem('access');
         setLocalStorage('access', data.access);
         return;
       } 

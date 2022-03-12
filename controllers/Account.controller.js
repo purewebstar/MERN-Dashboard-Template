@@ -321,18 +321,18 @@ const readAccount = {
 const updateAccount = {
     updatePassword: async (req, res)=>{
         const {oldPassword, newPassword} = req.body;
-
-        if(!(strongPassword.test(newPassword) || mediumPassword.test(newPassword))){
+        const User_id = req.user.payload.user_id;
+        if(!(strongPassword.test(newPassword) && mediumPassword.test(newPassword))){
             return res.status(400).json({message: 'Weak password!' ,status: false})
         }
         const hashedOldPassword = await bcrypt.hash(oldPassword, 12);
         const hashedNewPassword = await bcrypt.hash(newPassword, 12);
-        await User.findOneAndUpdate({password: hashedOldPassword}, {
+        await User.findOneAndUpdate({_id: User_id}, {
             $set:{
                 password: hashedNewPassword
             }
         }, {returnOriginal: true}, (err,success)=>{
-            if(err) return res.status(500).json({message: 'Something went wrong!', status:false});
+            if(err) return res.status(400).json({message: 'Something went wrong!', status:false});
             else if(success) return res.status(201).json({messsage: 'password updated!', status: true});
         }).clone();
 

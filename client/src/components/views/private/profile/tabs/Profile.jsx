@@ -7,26 +7,24 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { Grid } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
-import {updateProfile, createProfile} from '../../../../../api/profile.api';
+import {createProfile} from '../../../../../api/profile.api';
 import AMSnackbar from '../../../../../components/layouts/feedbacks/AMSnackbar';
 import {tokens} from '../../../../../api/auth.api';
-import {setLocalStorage, getLocalStorage} from '../../../../../utils/Storage';
+import {setLocalStorage} from '../../../../../utils/Storage';
 import {useNavigate} from 'react-router-dom';
 
 const Profile = props => {
   const[values, setValues] = React.useState({
-    firstName: '',
-    lastName: '',
-    bio: '', 
     phone: '',
-    city: '',
-    country: '',
+    bio: '', 
+    location: '',
   }) 
   const navigate = useNavigate();
   const renewToken = async()=>{
     let payload = await tokens.renew().then((res)=>{
       const {data} = res;
       if (data.status) {
+        window.localStorage.removeItem('access');
         setLocalStorage('access', data.access);
         return;
       } 
@@ -42,12 +40,9 @@ const Profile = props => {
   };
   const handlePersonal = async(e)=>{
     e.preventDefault();
-    let address = {}
-    address.city = values.city;
-    address.country = values.country;
-    let payload = await createProfile.personal(address, values.phone, values.bio).then((res)=>{
+    let payload = await createProfile.personal(values.location, values.phone, values.bio).then((res)=>{
       const {data} = res;
-      if(data.status){
+      if(data.status){ 
         setOpenSnackbar(true);
         setErrorColor('success')
         setError(data.message)
@@ -58,6 +53,7 @@ const Profile = props => {
           renewToken();
           handlePersonal();
          }
+         setOpenSnackbar(true);
         setErrorColor('error')
         setError('Unable to update!');
       });
@@ -129,49 +125,18 @@ const Profile = props => {
             }}
             
             >
-            First Name
+            Phone
           </Typography>
           <TextField        
-          label="First Name"
-          defaultValue={props.profile&&props.profile.firstName&&props.profile.firstName}
-          onChange={handleChange('firstName')}
+          label="Phone"
+          defaultValue={props.profile&&props.profile.profileObj.phone&&props.profile.profileObj.phone}
+          onChange={handleChange('phone')}
           size="small"
           sx={{
             mb:1,
             width: `100%`,
           }} 
           />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              mb:1,
-              mt:1,
-            }}
-            
-            >
-            Last Name
-            </Typography>
-          <TextField 
-          defaultValue={props.profile&&props.profile.lastName&&props.profile.lastName}
-          onChange={handleChange('lastName')}
-          size="small"
-          label="Last Name"
-          sx={{
-            mb:1,
-            width: `100%`,
-          }} 
-          />
-          <Typography
-            variant="h6"
-            sx={{
-                fontWeight: 600,
-                mb:1,
-            }}
-            className={`text-secondary`}
-            >
-            Please provide your true First and Last name.
-            </Typography>
           <Typography
             variant="h5"
             sx={{
@@ -184,7 +149,7 @@ const Profile = props => {
             Bio
             </Typography>
             <TextareaAutosize
-              defaultValue={props.profile&&props.profile.bio&&props.profile.bio}
+              defaultValue={props.profile&&props.profile.profileObj.bio&&props.profile.profileObj.bio}
               onChange={handleChange('bio')}
               maxRows={4}
               aria-label="maximum height"
@@ -204,6 +169,8 @@ const Profile = props => {
             Location
             </Typography>
           <TextField 
+          defaultValue={props.profile&&props.profile.profileObj.location&&props.profile.profileObj.location}
+          onChange={handleChange('location')}
           label="Location"
           size="small"
           sx={{
