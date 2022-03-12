@@ -16,25 +16,12 @@ import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import Rating from '@mui/material/Rating';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import FlagRoundedIcon from '@mui/icons-material/FlagRounded';
 import PhoneEnabledRoundedIcon from '@mui/icons-material/PhoneEnabledRounded';
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
-import MarkChatUnreadRoundedIcon from '@mui/icons-material/MarkChatUnreadRounded';
 import Skeleton from '@mui/material/Skeleton';
 import config from '../../../../constants/config';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import CloseIcon from '@mui/icons-material/Close';
-import Backdrop from '@mui/material/Backdrop';
-import { useDispatch, useSelector } from 'react-redux';
-
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
+import {getLocalStorage} from '../../../../utils/Storage';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
 '& .MuiBadge-badge': {
@@ -66,7 +53,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Dashboard = props => {
-    const dispatch = useDispatch();
+  const userData = getLocalStorage('user');
+  let profile = userData?userData: '';
 
     React.useEffect(()=>{
       $('title').html('Dashboard | GoWebBox');
@@ -111,53 +99,50 @@ const Dashboard = props => {
             p: 1,
             m: 1,
             mt: 2,
-            bgcolor: `#f5f5f5`,
+            backgroundColor: '#ffffff',
+            border: 1,
+            borderColor: `#e0e0e0`, 
             }}
             >
-             {
-                     props.loader?
-                     <>
-                      <Skeleton animation="wave" variant="circular" width={135} height={135} />
-                     </>
-                     :
-                     <>
-                    <IconButton  sx={{ p: 0 }}>
-                      <Stack direction="row" spacing={2}>
-                        <StyledBadge
-                            overlap="circular"
-                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            variant="dot"
-                        >
-                            <Avatar sx={{ bgcolor: blue[500],width: 135, height: 135 }} aria-label="profile-image"
-                             
-                            />
-                        </StyledBadge>
-                      </Stack>
-                  </IconButton>
-                     </> 
-                   }
-            </Box>    
+            <IconButton  sx={{ p: 0}}>
+                <Stack direction="row" spacing={2}>
+                  <StyledBadge
+                      overlap="circular"
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      variant="dot"
+                  >
+                    <Avatar 
+                    sx={{ bgcolor: blue[500],width: 135, height: 135 }} 
+                    aria-label="profile-image"
+                    alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
+                    src={profile&&profile.profileObj&&profile.profileObj.photo? (profile.profileObj.photo.includes("https://lh3.googleusercontent.com/"))?
+                    profile&&profile.profileObj.photo: 
+                    `${config.WS_URL}images/profile/${profile.profileObj&&profile.profileObj.photo&&profile.profileObj.photo}`: 
+                    profile&&profile.firstName.charAt(0)}
+                    />
+                  </StyledBadge>
+                </Stack>
+            </IconButton>
+            </Box>  
             <Box
             sx={{
             justifyContent: 'center',
             textAlign: 'center',
-            p: 1,
+            p: 2,
             m: 1,
-            mt: 5
+            mt: 1,
+            backgroundColor: `#ffffff`
             }}
             >
-              {
-                props.loader?
-                <>
-                 <Skeleton animation="wave" height={20} width="50%" sx={{ml: 10}} />
-                </>
-                :
-                <>
-                <Typography variant="h3" className={`text-info`}>
-                {props.profile&&props.profile.firstName} {props.profile&&props.profile.lastName}
-                </Typography>
-                </>
-              }
+              <Typography 
+              variant="h3" 
+              color="primary"
+              sx={{
+                fontWeight: 600
+              }}
+              >
+                {profile&&profile.firstName} {profile&&profile.lastName}
+              </Typography>
               <Box
               sx={{
               display: 'flex',
@@ -167,18 +152,15 @@ const Dashboard = props => {
               mb:2,
               bgcolor: 'background.paper',
               borderRadius: 1,
-              bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : 'grey.100'),
-              color: (theme) => (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800'),
-              border: '1px solid',
-              borderColor: (theme) =>
-              theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
+              bgcolor: `rgba(0, 0, 0, 0.1)`,
+              
               }}
               >
-                <div className={`mt-4`}>
+                <Box sx={{p:1}}>
                 <Typography variant="h6" color="text.white" sx={{mt:-1}}>
-                 I am a full stack web developer and also graphics design from ethiopia. I have more than 4 years of experience.
+                {profile&&profile.profileObj.bio?profile.profileObj.bio: ``}
                 </Typography>
-                </div>
+                </Box>
             </Box>
             <Divider/>
             <Box
@@ -191,11 +173,11 @@ const Dashboard = props => {
             mt:0,
             }}
             >
-              <Typography variant="h6" className={`text-info`} sx={{fontWeight: 500}}>
-                <LocationOnRoundedIcon/> {`CITY`}
+              <Typography variant="h6" color="secondary" sx={{fontWeight: 600}}>
+              <LocationOnRoundedIcon/> {`LOCATION`}
               </Typography>
               <Typography sx={{ ml: 0, fontSize: 14, fontWeight: 600 }} component="div" className={`text-secondary`}>
-                &nbsp;{`ADDIS ABABA`}
+                &nbsp;{profile&&profile.profileObj.location?profile.profileObj.location: `N/A`}
               </Typography>
             </Box>
             <Box
@@ -208,28 +190,11 @@ const Dashboard = props => {
             mt:0,
             }}
             >
-              <Typography variant="h6" className={`text-info`} sx={{fontWeight: 500}}>
-                <FlagRoundedIcon/> {`COUNTRY`}
-              </Typography>
-              <Typography sx={{ ml: 0, fontSize: 14, fontWeight: 600 }} component="div" className={`text-secondary`}>
-                &nbsp;{`ETHIOPIA`}
-              </Typography>
-            </Box>
-            <Box
-            sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            textAlign: 'center',
-            p: 1,
-            mr: 1,
-            mt:0,
-            }}
-            >
-              <Typography variant="h6" className={`text-info`} sx={{fontWeight: 500}}>
+              <Typography variant="h6" color="secondary" sx={{fontWeight: 600}}>
                 <PhoneEnabledRoundedIcon/> {`CONTACT`}
               </Typography>
               <Typography sx={{ ml: 0, fontSize: 14, fontWeight: 600 }} component="div" className={`text-secondary`}>
-                &nbsp;{`+251912353735`}
+                &nbsp;{profile&&profile.profileObj.phone?profile.profileObj.phone: `N/A`}
               </Typography>
             </Box>
           </Box>

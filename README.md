@@ -4,7 +4,7 @@ This Template allows you to quickly and easily develop a web application using M
 
 It helps you if you read through this README to get the most our of what this template has to offer. I appreciate any issue reports or recommendations for further development. 
 
-Demonstration of this Template [MERN-Dashboard-Template](https://mern-dash.abraham-mitiku.com/).
+Screenshot
 ![Sample Images](https://github.com/abriilo/MERN-Dashboard-Template/blob/main/repo-images/signin.png?raw=true)
   
 ## Getting Started

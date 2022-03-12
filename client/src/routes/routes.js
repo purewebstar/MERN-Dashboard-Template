@@ -95,7 +95,7 @@ children: [
         {
             path: "/user/profile",
             element: <PrivateRoute><Profile /></PrivateRoute>,
-        },
+        }, 
         {
             path: "/user/order",
             element: <PrivateRoute><Order /></PrivateRoute>,
