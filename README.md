@@ -93,7 +93,7 @@ SECRET_SITE_EMAIL_PASSWORD= ? // your sendgrid connected -> password
 ```
 
 ## Implementation
-**:heavy_check_mark: Here we are stating implementation of backend only**
+**:heavy_check_mark: Below is Implementation of Backend**
 For Front-End implementations you can visit to **Client** directory folder [Frontend README](https://github.com/abriilo/MERN-Dashboard-Template/blob/main/client/README.md)
 
 ## Table of Contents
