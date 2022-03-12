@@ -1,3 +1,10 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+import $ from 'jquery';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';

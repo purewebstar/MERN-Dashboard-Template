@@ -32,7 +32,7 @@ import config from '../../../constants/config';
 import {getLocalStorage} from '../../../utils/Storage';
  
 const userData = getLocalStorage('user');
-let profile = userData?userData: {};
+let profile = userData?userData: '';
 const drawerWidth = 240;
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -188,7 +188,7 @@ const AMTopbar = props =>{
               />
             </Search>
              <Box sx={{ flexGrow: 0 }}/>
-               <Box sx={{display: 'flex'}}>
+               <Box sx={{display: 'flex'}} className={`top-navigation`}>
                 <Link to='/user'>
                   <Typography
                     variant="h6"
@@ -239,6 +239,19 @@ const AMTopbar = props =>{
                   
                 >
                 Feedback
+                </Typography>
+                </Link>
+                <Link to='/user/contact'  >
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ display: { xs: 'none', sm: 'block' } , mt:2, color: `#ffffff`, fontWeight: 500}}                 
+                  style={{padding: '5px', borderRadius: '5%', marginLeft: '15px'}}
+                  id="nav-contact"
+                  
+                >
+                Contact
                 </Typography>
                 </Link>
               </Box>

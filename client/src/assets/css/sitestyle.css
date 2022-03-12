@@ -9,4 +9,7 @@ a {
   .bottom-navigation{
     display: block!important;
   }
+  .top-navigation{
+    display: none!important;
+  }
 }

@@ -1,3 +1,10 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+import $ from 'jquery';
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -5,8 +12,6 @@ import Box from '@mui/material/Box';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Button from '@mui/material/Button';  
-import Chip from '@mui/material/Chip';
-import { red, blue, green, teal, purple} from '@mui/material/colors';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link } from 'react-router-dom';
 import AMTable from '../../../../components/layouts/data-displays/AMTable'
@@ -25,15 +30,31 @@ const Order = () => {
         setAlignment(newAlignment);
       }
     };
-    // on mount
     React.useEffect(()=>{
-        
+        $('title').html('Order | GoWebBox');
+        $('#nav-order').css({
+            backgroundColor: `#0099CC`,
+            color: `#ffffff`
+        })
+        $('#mob-order').css({
+            backgroundColor: `#0099CC`,
+            color: `#ffffff`
+        })
+        $(window).scrollTop(0,0);
     
     },[]);
     // on unmount
     React.useEffect( () =>
     () =>{
-        
+        $('#nav-order').css({
+            backgroundColor: `#181e2b`,
+          
+        })
+        $('#mob-order').css({
+          backgroundColor: `#2e3951`,    
+          color: `inherit`,   
+        })
+       
     }, [] );
 
     return (

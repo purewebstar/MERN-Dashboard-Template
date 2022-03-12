@@ -42,12 +42,12 @@ const AMBottombar = props =>{
         <Toolbar>
             <Link to='/user'>
               <IconButton color="inherit" aria-label="open drawer" id="mob-dashboard" sx={{mr: 1, backgroundColor: `#2e3951`}}>
-                <DashboardIcon color="secondary" sx={{ fontSize: 25 }} />
+                <DashboardIcon color="inherit" sx={{ fontSize: 25 }} />
               </IconButton>
             </Link> 
             <Link to='/user/order'>
             <IconButton color="inherit" aria-label="open drawer" id="mob-order" sx={{mr: 1,backgroundColor: `#2e3951`}}>
-                <ShoppingBagRoundedIcon color="secondary" sx={{ fontSize: 25 }}/>
+                <ShoppingBagRoundedIcon color="inherit" sx={{ fontSize: 25 }}/>
             </IconButton>
             </Link>
             <Link to='/user/blog'>
@@ -56,14 +56,14 @@ const AMBottombar = props =>{
               </StyledFab>
             </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <Link to='/user'>
+          <Link to='/user/feedback'>
           <IconButton color="inherit" aria-label="open drawer" id="mob-feedback" sx={{mr: 1,backgroundColor: `#2e3951`}}>
-             <ChatRoundedIcon color="secondary" sx={{ fontSize: 25 }}/>
+             <ChatRoundedIcon color="inherit" sx={{ fontSize: 25 }}/>
           </IconButton>
           </Link>
-          <Link to='/user'>
-          <IconButton color="inherit" aria-label="open drawer" id="mob-subscriber" sx={{backgroundColor: `#2e3951`}}>
-            <PeopleOutlineRoundedIcon color="secondary" sx={{ fontSize: 25 }} />
+          <Link to='/user/contact'>
+          <IconButton color="inherit" aria-label="open drawer" id="mob-contact" sx={{backgroundColor: `#2e3951`}}>
+            <PeopleOutlineRoundedIcon color="inherit" sx={{ fontSize: 25 }} />
           </IconButton>
           </Link>
         <IconButton

@@ -27,7 +27,8 @@ import Dashboard from '../components/views/private/dashboard/Dashboard';
 import Profile from '../components/views/private/profile/Profile';
 import Order from '../components/views/private/order/Order';
 import Blog from '../components/views/private/blog/Blog';
-import Subscribers from '../components/views/private/dashboard/Dashboard';
+import Feedback from '../components/views/private/feedback/Feedback';
+import Contact from '../components/views/private/contact/Contact';
 
 /**
  *  Layouts [Private, Public]
@@ -105,7 +106,11 @@ children: [
         },
         {
             path: "/user/feedback",
-            element: <PrivateRoute><Dashboard /></PrivateRoute>,
+            element: <PrivateRoute><Feedback /></PrivateRoute>,
+        },
+        {
+            path: "/user/contact",
+            element: <PrivateRoute><Contact /></PrivateRoute>,
         },
     ],
 },

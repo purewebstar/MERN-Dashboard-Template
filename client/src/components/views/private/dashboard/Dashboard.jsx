@@ -1,3 +1,10 @@
+/**
+ *    © 2022 Abraham Mitiku
+ *    Open Source MERN Dashboard Template
+ * 
+ */
+// -----------------------------------------------------------------
+import $ from 'jquery';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -60,6 +67,33 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Dashboard = props => {
     const dispatch = useDispatch();
+
+    React.useEffect(()=>{
+      $('title').html('Dashboard | GoWebBox');
+      $('#nav-dashboard').css({
+          backgroundColor: `#0099CC`,
+          color: `#ffffff`
+      })
+      $('#mob-dashboard').css({
+          backgroundColor: `#0099CC`,
+          color: `#ffffff`
+      })
+      $(window).scrollTop(0,0);
+  
+  },[]);
+  // on unmount
+  React.useEffect( () =>
+  () =>{
+      $('#nav-dashboard').css({
+          backgroundColor: `#181e2b`,
+        
+      })
+      $('#mob-dashboard').css({
+        backgroundColor: `#2e3951`,    
+        color: `inherit`,   
+      })
+     
+  }, [] );
 
     return (
     <>
