@@ -9,7 +9,7 @@ const config = {
     WS_URL: 'http://localhost:4000/',
     WS_BACK_URL: 'http://localhost:4000',
     DOMAIN_NAME: 'http://localhost:3000',
-    GOOGLE_CLIENT_ID: '48389106918-n277d9kgbsdfrr920h2c6ur0ltsdwqs3eq4.apps.googleusercontent.com '
+    GOOGLE_CLIENT_ID: '477589106918-n277d9kgb4rr92d0h2c6ur0ltoqs3eq4.apps.googleusercontent.com'
 }
  
 export default config;
