@@ -91,7 +91,7 @@ const Dashboard = props => {
      alignItems="flex-start"
      spacing={{xs: 0, md: -4}}
     >
-        <Grid item xs={12} md={4} sx={{height:140}}> 
+        <Grid item xs={12} md={3} sx={{height:140}}> 
             <Box
             sx={{
             display: 'flex',
@@ -112,7 +112,7 @@ const Dashboard = props => {
                       variant="dot"
                   >
                     <Avatar 
-                    sx={{ bgcolor: blue[500],width: 135, height: 135 }} 
+                    sx={{ bgcolor: blue[500],width: 100, height: 100 }} 
                     aria-label="profile-image"
                     alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
                     src={profile&&profile.profileObj&&profile.profileObj.photo? (profile.profileObj.photo.includes("https://lh3.googleusercontent.com/"))?
@@ -135,7 +135,7 @@ const Dashboard = props => {
             }}
             >
               <Typography 
-              variant="h3" 
+              variant="h4" 
               color="primary"
               sx={{
                 fontWeight: 600
@@ -199,7 +199,7 @@ const Dashboard = props => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={8} sx={{height:140}}>
+        <Grid item xs={12} md={9} sx={{height:140}}>
             <Box
             sx={{
             display: 'flex',

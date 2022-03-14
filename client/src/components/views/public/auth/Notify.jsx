@@ -35,7 +35,7 @@ const Notify = () => {
                 <Grid item xs={12} md={10} sx={{bgcolor: '#1c2331'}}>
                     <Box sx={{p:5, textAlign: 'center'}}>
                         {
-                            (id && ( id==0))?
+                            (( id==0))?
                             <>
                             <Typography variant="h2" sx={{ fontWeight: 600, color: `#FF8800`}} >
                                 {`Reset Password`} 

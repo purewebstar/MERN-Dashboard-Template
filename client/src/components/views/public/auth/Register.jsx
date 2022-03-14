@@ -229,7 +229,7 @@ const Register = props =>{
       if (data.status) {
           setError("");
           setTimeout(()=>{
-            navigate('/auth/notification/0') // notify to verify email address if not verified
+            navigate('/auth/notification/1') // 
           },2000);       
         } 
       }).catch(err=>{
@@ -255,7 +255,7 @@ const Register = props =>{
             setLocalStorage("access", data.access);
             let profileData = data.data?data.data[0]: [];
             setLocalStorage('user', profileData);
-            setCookie('refresh', data.refreshToken, 7)
+            setCookie('refresh', data.refresh, 7)
             setTimeout(()=>{
               setOpen(false)
               let from = location.state?.from?.pathname || "/user";

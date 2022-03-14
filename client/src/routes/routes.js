@@ -85,7 +85,7 @@ children: [
 /**
  *  Private Views
  *  Directories: 
- *  Views -> Auth -> [Login, Register, Forgot, Reset, Notify, Verify]
+ *  Views -> Private -> [Dashboard, Profile, ... etc]
  */ 
 {
     path: "/user",

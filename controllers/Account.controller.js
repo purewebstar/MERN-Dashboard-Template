@@ -138,7 +138,7 @@ const createAccount = {
                 else{
                     return res
                     .status(200)
-                    .json({ data: success, access: accessToken, refreshToken:refreshToken, message: "success",status:true });
+                    .json({ data: success, access: accessToken, refresh:refreshToken, message: "success",status:true });
                 }
             })
             
@@ -230,7 +230,7 @@ const readAccount = {
                 }
             },
         ], (err,success)=>{
-            if(err) isVerified = false;
+            if(err) isVerified = false; 
             else if(success) isVerified = true;
             else isVerified = false;
         });
@@ -255,7 +255,6 @@ const readAccount = {
                             $and: [
                                 { _id: valid_user },
                                 { emailVerified: true }, 
-                                { external: false }
                             ]
                         }
                     },
@@ -269,9 +268,6 @@ const readAccount = {
                         }
                     },
                     {
-                        $unwind: '$profileObj'
-                    },
-                    {
                         $project: 
                         {
                             password: 0,
@@ -279,9 +275,9 @@ const readAccount = {
                         }
                     },
                 ], async (err, success)=>{
-                    
+                   // console.log(success)
                     if(err) return res.status(400).json({message: 'Something went wrong!', status:false})
-                    else if(!(success[0] && isMatch)) return res.status(404).json({message: 'User Not Found!', status:false});
+                    else if(!(isMatch)) return res.status(404).json({message: 'User Not Found!', status:false});
                     else{
                         if(!(success[0]&&success[0].profileObj&&success[0].profileObj[0])){
                             const newProfile = new Profile({
@@ -295,7 +291,7 @@ const readAccount = {
                         const refreshToken = jwt.sign({payload}, process.env.REFRESH_KEY, {expiresIn: '7d'});
                         return res                           
                             .status(200)
-                            .json({ data: success&&success[0], accessToken: accessToken, refreshToken:refreshToken, message: "success" ,status: true});
+                            .json({ data: success, access: accessToken, refresh:refreshToken, message: "success" ,status: true});
 
                     }
                 });
@@ -348,7 +344,7 @@ const readAccount = {
             return res
                 
                 .status(200)
-                .json({ data: success, access: accessToken, refreshToken:refreshToken, message: "success", status:true });
+                .json({ data: success, access: accessToken, refresh:refreshToken, message: "success", status:true });
               
            }
         });

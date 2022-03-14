@@ -90,10 +90,10 @@ const Login = props =>{
       setErrorColor('success');
       window.localStorage.removeItem('access');
       window.localStorage.removeItem('user');
-      setLocalStorage("access", data.accessToken);
+      setLocalStorage("access", data.access);
       let profileData = data.data?data.data[0]: [];
        setLocalStorage('user', profileData);
-      setCookie('refresh', data.refreshToken, 7)
+      setCookie('refresh', data.refresh, 7)
       setTimeout(()=>{
         setOpen(false)
         let from = location.state?.from?.pathname || "/user";
@@ -142,7 +142,7 @@ const Login = props =>{
           setLocalStorage("access", data.access);
           let profileData = data.data?data.data[0]: [];
           setLocalStorage('user', profileData);
-          setCookie('refresh', data.refreshToken, 7)
+          setCookie('refresh', data.refresh, 7)
           setTimeout(()=>{
             setOpen(false)
             let from = location.state?.from?.pathname || "/user"; 
