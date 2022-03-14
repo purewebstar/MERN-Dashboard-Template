@@ -112,7 +112,7 @@ const Dashboard = props => {
                       variant="dot"
                   >
                     <Avatar 
-                    sx={{ bgcolor: blue[500],width: 100, height: 100 }} 
+                    sx={{ bgcolor: blue[500],width: 100, height: 100 }}  
                     aria-label="profile-image"
                     alt={profile&&profile.firstName&&profile.firstName.charAt(0)} 
                     src={profile&&profile.profileObj&&profile.profileObj.photo? (profile.profileObj.photo.includes("https://lh3.googleusercontent.com/"))?
